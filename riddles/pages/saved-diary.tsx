@@ -44,7 +44,7 @@ export async function getServerSideProps() {
   //const { params } = context;
   //const { slug } = params;
 
-  const response = await fetch("http://localhost:3000/api/posts", {
+  const response = await fetch(`${process.env["HOST"]}/api/posts`, {
     method: "POST",
     body: JSON.stringify({ user: "test" }),
     headers: {
