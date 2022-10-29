@@ -39,18 +39,23 @@ const Saved: NextPage = (props: any) => {
     </div>
   );
 };
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
   //export function getStaticProps(context) {
   //const { params } = context;
   //const { slug } = params;
-
-  const response = await fetch(`${process.env["HOST"]}/api/posts`, {
-    method: "POST",
-    body: JSON.stringify({ user: "test" }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const env = process.env.NODE_ENV;
+  const response = await fetch(
+    `${
+      env === "production" ? context.req.headers.host : process.env["HOST"]
+    }/api/posts`,
+    {
+      method: "POST",
+      body: JSON.stringify({ user: "test" }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const data = await response.json();
 
