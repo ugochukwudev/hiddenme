@@ -147,7 +147,7 @@ export async function getServerSideProps(context: any) {
   const response = await fetch(
     `${
       env === "production"
-        ? `https://${context.req.headers.host}`
+        ? `https://hiddenme.vercel.app/`
         : `http://${context.req.headers.host}`
     }/api/posts`,
     {
