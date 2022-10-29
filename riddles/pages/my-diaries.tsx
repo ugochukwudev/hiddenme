@@ -43,7 +43,9 @@ export async function getServerSideProps(context: any) {
   const env = process.env.NODE_ENV;
   const response = await fetch(
     `${
-      env === "production" ? context.req.headers.host : process.env["HOST"]
+      env === "production"
+        ? `https://${context.req.headers.host}`
+        : `http://${context.req.headers.host}`
     }/api/posts`,
     {
       method: "POST",

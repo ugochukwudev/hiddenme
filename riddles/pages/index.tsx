@@ -142,9 +142,13 @@ export async function getServerSideProps(context: any) {
   //const { params } = context;
   //const { slug } = params;
   const env = process.env.NODE_ENV;
+  console.log("text", `https://${context.req.headers.host}`);
+
   const response = await fetch(
     `${
-      env === "production" ? context.req.headers.host : process.env["HOST"]
+      env === "production"
+        ? `https://${context.req.headers.host}`
+        : `http://${context.req.headers.host}`
     }/api/posts`,
     {
       method: "POST",
