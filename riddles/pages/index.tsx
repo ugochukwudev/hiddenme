@@ -137,7 +137,7 @@ const Home: NextPage = (props: any) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   //export function getStaticProps(context) {
   //const { params } = context;
   //const { slug } = params;
