@@ -2,10 +2,15 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Post from "../../components/post";
+const { MongoClient, ServerApiVersion } = require("mongodb");
+
 const User = (props: any) => {
   const { post } = props;
-  console.log(post);
-  const datas = post.user.user;
+  const all = JSON?.parse(post);
+  console.log(all);
+  // const datas = post.user.user;
+  const posts = all?.user;
+  const datas = posts;
   const [user, setUser] = useState([] as any);
 
   const router = useRouter();
@@ -77,23 +82,33 @@ const User = (props: any) => {
   );
 };
 export async function getServerSideProps() {
-  //export function getStaticProps(context) {
-  //const { params } = context;
-  //const { slug } = params;
-
-  const response = await fetch("http://localhost:3000/api/posts", {
-    method: "POST",
-    body: JSON.stringify({ user: "test" }),
-    headers: {
-      "Content-Type": "application/json",
-    },
+  //const [dataset, setDataSet] = useState({} as any);
+  const client = new MongoClient(process.env.URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
   });
-
-  const data = await response.json();
+  const handler = async () => {
+    // if (!client.connected()) await client.connect();
+    //if (err) throw err;
+    const db = await client.db("hidden");
+    const user = await db
+      .collection("posts")
+      .find()
+      .sort({ title: 1 })
+      .toArray();
+    return {
+      message: "sucess 🦄 🦄",
+      user: user,
+    };
+  };
+  const data = await handler();
+  let all = JSON.stringify(data);
+  console.log(data);
 
   return {
     props: {
-      post: data,
+      post: all,
     },
   };
 }

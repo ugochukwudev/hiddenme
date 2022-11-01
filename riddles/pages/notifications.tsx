@@ -3,13 +3,14 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Post from "../components/post";
-
+const { MongoClient, ServerApiVersion } = require("mongodb");
 const Notifications: NextPage = (props: any) => {
-  const [datas, setDatas] = useState([]);
   const { post } = props;
-
-  const posts = post.user.user;
-  console.log(posts);
+  const all = JSON.parse(post);
+  console.log(all);
+  // const datas = post.user.user;
+  const posts = all?.user;
+  const [datas, setDatas] = useState([]);
   useEffect(() => {
     if (typeof window !== "undefined") {
       console.log("You are on the browser");
@@ -30,18 +31,24 @@ const Notifications: NextPage = (props: any) => {
         {datas &&
           datas?.map(
             (notification: { message: string; postid: string }, i: number) => {
+              if (typeof window !== "undefined") {
+                console.log("You are on the browser");
+                var newObject: any = window.localStorage.getItem("user");
+                var data = JSON.parse(newObject);
+                console.log("data", data);
+              }
               console.log("p", posts);
-              const main = posts.filter(
+              const post = posts.filter(
                 (role: { _id: string }) => role._id === notification.postid
               );
-              console.log("result", main);
+              console.log("result", post[0]?._id);
               return (
                 <div key={i} className="w-full text-center p-4">
                   <span className="border-2 border-yellow-500 text-white cursor-pointer rounded-full p-2 m-4">
                     {notification.message}
                   </span>
                   <>
-                    <Post key={i} {...main} />;
+                    <Post key={post._id} {...post[0]} {...data} />
                   </>
                 </div>
               );
@@ -51,31 +58,34 @@ const Notifications: NextPage = (props: any) => {
     </>
   );
 };
-export async function getServerSideProps(context: any) {
-  //export function getStaticProps(context) {
-  //const { params } = context;
-  //const { slug } = params;
-  const env = process.env.NODE_ENV;
-  const response = await fetch(
-    `${
-      env === "production"
-        ? `https://hiddenme.vercel.app/`
-        : `http://${context.req.headers.host}`
-    }/api/posts`,
-    {
-      method: "POST",
-      body: JSON.stringify({ user: "test" }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  const data = await response.json();
+export async function getServerSideProps() {
+  //const [dataset, setDataSet] = useState({} as any);
+  const client = new MongoClient(process.env.URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
+  const handler = async () => {
+    // if (!client.connected()) await client.connect();
+    //if (err) throw err;
+    const db = await client.db("hidden");
+    const user = await db
+      .collection("posts")
+      .find()
+      .sort({ title: 1 })
+      .toArray();
+    return {
+      message: "sucess 🦄 🦄",
+      user: user,
+    };
+  };
+  const data = await handler();
+  let all = JSON.stringify(data);
+  console.log(data);
 
   return {
     props: {
-      post: data,
+      post: all,
     },
   };
 }

@@ -3,10 +3,14 @@ import Head from "next/head";
 import Image from "next/image";
 import Post from "../components/post";
 import { useEffect, useState } from "react";
+const { MongoClient, ServerApiVersion } = require("mongodb");
 const Diaries: NextPage = (props: any) => {
   const { post } = props;
-  console.log(post);
-  const datas = post.user.user;
+  const all = JSON.parse(post);
+  console.log(all);
+  // const datas = post.user.user;
+  const posts = all?.user;
+  const datas = posts;
 
   const [datacontent, setData] = useState("");
   useEffect(() => {
@@ -36,31 +40,34 @@ const Diaries: NextPage = (props: any) => {
     </div>
   );
 };
-export async function getServerSideProps(context: any) {
-  //export function getStaticProps(context) {
-  //const { params } = context;
-  //const { slug } = params;
-  const env = process.env.NODE_ENV;
-  const response = await fetch(
-    `${
-      env === "production"
-        ? `https://hiddenme.vercel.app/`
-        : `http://${context.req.headers.host}`
-    }/api/posts`,
-    {
-      method: "POST",
-      body: JSON.stringify({ user: "test" }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  const data = await response.json();
+export async function getServerSideProps() {
+  //const [dataset, setDataSet] = useState({} as any);
+  const client = new MongoClient(process.env.URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
+  const handler = async () => {
+    // if (!client.connected()) await client.connect();
+    //if (err) throw err;
+    const db = await client.db("hidden");
+    const user = await db
+      .collection("posts")
+      .find()
+      .sort({ title: 1 })
+      .toArray();
+    return {
+      message: "sucess 🦄 🦄",
+      user: user,
+    };
+  };
+  const data = await handler();
+  let all = JSON.stringify(data);
+  console.log(data);
 
   return {
     props: {
-      post: data,
+      post: all,
     },
   };
 }

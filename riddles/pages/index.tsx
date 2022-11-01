@@ -1,20 +1,22 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Post from "../components/post";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useState, useLayoutEffect } from "react";
 
+const { MongoClient, ServerApiVersion } = require("mongodb");
+
 const Home: NextPage = (props: any) => {
   const { post } = props;
-  console.log(props);
-  const posts = post.user.user;
+  const all = JSON.parse(post);
+  console.log(all);
+  // const datas = post.user.user;
+  const posts = all?.user;
   const [data, setData] = useState("");
   const [notification, setNotification] = useState({} as number);
   const [id, setId] = useState({} as string);
-  const [email, setEmail] = useState({} as any);
-  const [password, setPassword] = useState({} as any);
+
   const [user, setUser] = useState({});
   const relogin = async (email: string, password: string) => {
     const response = await fetch("/api/login", {
@@ -25,9 +27,9 @@ const Home: NextPage = (props: any) => {
       },
     });
 
-    const data = await response.json();
+    const data = await response?.json();
     {
-      data && window?.localStorage?.setItem("user", JSON.stringify(data));
+      data && window?.localStorage?.setItem("user", JSON?.stringify(data));
     }
     console.log(data);
     setUser(data);
@@ -35,15 +37,15 @@ const Home: NextPage = (props: any) => {
       console.log(data || "Something went wrong!");
     }
   };
-  console.log(post.user.user);
+  console.log(post?.user?.user);
   useEffect(() => {
     if (typeof window !== "undefined") {
       console.log("You are on the browser");
       var newObject: any = window.localStorage.getItem("user");
-      var data = JSON.parse(newObject);
+      var data = JSON?.parse(newObject);
     }
     {
-      !data && window.location.replace("/login");
+      !data && window?.location?.replace("/login");
     }
     {
       setData(data?.user?.user?.name);
@@ -78,15 +80,15 @@ const Home: NextPage = (props: any) => {
     }
     setNotification(data?.user?.user?.notify);
   }, []);
-  // useLayoutEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     console.log("You are on the browser");
-  //     var newObject: any = window.localStorage.getItem("user");
-  //     var data = JSON.parse(newObject);
-  //     setUser(data);
-  //     console.log("wee", user);
-  //   }
-  // }, []);
+  useLayoutEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("You are on the browser");
+      var newObject: any = window.localStorage.getItem("user");
+      var data = JSON.parse(newObject);
+      setUser(data);
+      console.log("wee", user);
+    }
+  }, []);
   return (
     <>
       {user && (
@@ -121,7 +123,7 @@ const Home: NextPage = (props: any) => {
               </button>
             </Link>
           </div>
-          {posts.map((post: any, i: number) => {
+          {posts?.map((post: any, i: number) => {
             if (typeof window !== "undefined") {
               console.log("You are on the browser");
               var newObject: any = window.localStorage.getItem("user");
@@ -136,33 +138,34 @@ const Home: NextPage = (props: any) => {
     </>
   );
 };
-
-export async function getServerSideProps(context: any) {
-  //export function getStaticProps(context) {
-  //const { params } = context;
-  //const { slug } = params;
-  const env = process.env.NODE_ENV;
-  console.log("text", `https://${context.req.headers.host}`);
-
-  const response = await fetch(
-    `${
-      env === "production"
-        ? `https://hiddenme.vercel.app/`
-        : `http://${context.req.headers.host}`
-    }/api/posts`,
-    {
-      method: "POST",
-      body: JSON.stringify({ user: "test" }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  const data = await response.json();
+export async function getServerSideProps() {
+  //const [dataset, setDataSet] = useState({} as any);
+  const client = new MongoClient(process.env.URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
+  const handler = async () => {
+    // if (!client.connected()) await client.connect();
+    //if (err) throw err;
+    const db = await client.db("hidden");
+    const user = await db
+      .collection("posts")
+      .find()
+      .sort({ title: 1 })
+      .toArray();
+    return {
+      message: "sucess 🦄 🦄",
+      user: user,
+    };
+  };
+  const data = await handler();
+  let all = JSON.stringify(data);
+  console.log(data);
 
   return {
     props: {
-      post: data,
+      post: all,
     },
   };
 }
