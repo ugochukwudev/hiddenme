@@ -38,12 +38,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         },
         { upsert: true }
       );
-      const post = await db
-        .collection("posts")
-        .findOne({ _id: ObjectId(postid) });
+
       res.status(200).json({
         message: "user saved a cup of vawolence 🦄 🦄 +++++++",
-        saved: post.saved,
+        saved: user.saved,
       });
       console.log(user);
     } else {
@@ -55,12 +53,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
           },
         }
       );
-      const post = await db
-        .collection("posts")
-        .findOne({ _id: ObjectId(postid) });
       res.status(200).json({
         message: "user unsaved a cup of vawolence 🦄 🦄 ----",
-        saved: post.saved,
+        saved: user.saved,
       });
       console.log(user);
     }
