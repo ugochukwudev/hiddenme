@@ -95,7 +95,7 @@ const Home: NextPage = (props: any) => {
         <div className="bg-[#7B8CA6]">
           <div className="bg-[#465975] h-fit p-2 z-10 flex-wrap sticky top-[135px]">
             <Link href="/upload">
-              <motion.button className="bg-white hover:text-white hover:bg-transparent  text-black mt-4 ml-10 p-2 rounded-full font-bold">
+              <motion.button className="bg-white hover:text-white hover:bg-transparent hover:border-[1px] hover:border-white  text-black mt-4 ml-10 p-2 rounded-full font-bold">
                 Add to diary
               </motion.button>
             </Link>

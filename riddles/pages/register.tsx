@@ -140,7 +140,7 @@ const Login: NextPage = () => {
                 href="/login"
                 className="text-xs font-semibold text-purple-700"
               >
-                <span className="text-xs text-purple-700 font-semibold">
+                <span className="text-xs text-purple-700 font-semibold cursor-pointer">
                   Sign In
                 </span>
               </Link>

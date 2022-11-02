@@ -98,9 +98,11 @@ const Login: NextPage = () => {
               </div>
 
               <div className="mb-3 flex flex-wrap content-center">
-                <a href="#" className="text-xs font-semibold text-purple-700">
-                  Forgot password?
-                </a>
+                <Link href="/forgotpassword">
+                  <p className="text-xs font-semibold text-purple-700">
+                    Forgot password?
+                  </p>
+                </Link>
               </div>
 
               <div className="mb-3">

@@ -33,7 +33,11 @@ const Diaries: NextPage = (props: any) => {
   console.log(result);
   return (
     <div className="bg-[#7B8CA6] ">
-      {!result.lenght && <p className="text-green-900">nooooooooooooooo</p>}
+      {result.lenght < 1 && (
+        <p className="text-green-900 text-center font-black text-[40px]">
+          User have no post yet{" "}
+        </p>
+      )}
       {result?.map((post: {}, index: number) => {
         return <Post key={index * Math.random()} {...post} />;
       })}

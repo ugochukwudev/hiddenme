@@ -11,22 +11,42 @@ const Notifications: NextPage = (props: any) => {
   // const datas = post.user.user;
   const posts = all?.user;
   const [datas, setDatas] = useState([]);
+  const [id, setId] = useState<any>();
   useEffect(() => {
     if (typeof window !== "undefined") {
       console.log("You are on the browser");
       var newObject: any = window.localStorage.getItem("user");
       var data = JSON.parse(newObject);
+      var id = data?.user?.user?._id;
       var notify = data.user.user.notification;
     }
     {
-      data && setDatas(notify);
+      data && setDatas(notify), setId(id);
     }
   }, []);
   console.log(datas);
+  const clearallNotification = async () => {
+    const response = await fetch("/api/clearallnotification", {
+      method: "POST",
+      body: JSON.stringify({ id: id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
+    const data = await response.json();
+
+    window.location.pathname = "/";
+  };
   return (
     <>
       <h1 className="text-yellow-500 text-2xl text-center">Notifications...</h1>
+      <p
+        onClick={() => clearallNotification()}
+        className="text-[#1D2639] font-medium cursor-pointer leading-[20px] tracking-[-0.5px] italic text-center"
+      >
+        Clear all notification...
+      </p>
       <div className="flex w-full flex-col">
         {datas &&
           datas?.map(
@@ -47,9 +67,11 @@ const Notifications: NextPage = (props: any) => {
                   <span className="border-2 border-yellow-500 text-white cursor-pointer rounded-full p-2 m-4">
                     {notification.message}
                   </span>
-                  <>
-                    <Post key={post._id} {...post[0]} {...data} />
-                  </>
+                  {post[0]?._id !== undefined && (
+                    <>
+                      <Post key={post._id} {...post[0]} {...data} />
+                    </>
+                  )}
                 </div>
               );
             }

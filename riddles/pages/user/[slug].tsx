@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Post from "../../components/post";
+import Link from "next/link";
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
 const User = (props: any) => {
@@ -25,7 +26,7 @@ const User = (props: any) => {
       },
     });
 
-    const data = await response.json();
+    const data = await response?.json();
     console.log(data);
     setUser(data);
   };
@@ -55,16 +56,24 @@ const User = (props: any) => {
         </p>
         {!user.user && (
           <p className="text-white font-extrabold text-2xl text-center mt-10">
-            User account have been deleted
+            User account might have been deleted
           </p>
         )}
         {user?.user && (
-          <p className="text-white text-xl p-4 border-2 border-white w-3/12 text-center ml-auto mr-auto hover:font-bold mt-10 rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer">
+          <p className="text-white text-xl px-4 border-2 py-1 border-white w-3/12 text-center ml-auto mr-auto hover:font-bold mt-10 rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer">
             Report user
           </p>
         )}
+
+        {user?.user?._id === slug && (
+          <Link href="/changepassword">
+            <p className="text-white text-xl px-4 py-1 border-2 border-white w-fit text-center ml-auto mr-auto hover:font-bold mt-10 rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer">
+              change password
+            </p>
+          </Link>
+        )}
         {user?.user?.name === "admin" && (
-          <p className="text-white text-xl p-4 border-2 border-white w-6/12 text-center ml-auto mr-auto mt-10 hover:font-bold rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer">
+          <p className="text-white text-xl px-4 py-1 border-2 border-white w-6/12 text-center ml-auto mr-auto mt-10 hover:font-bold rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer">
             send Notification
           </p>
         )}
@@ -75,7 +84,7 @@ const User = (props: any) => {
       })}
       {result < 1 && (
         <p className="text-center text-white font-extrabold italic ">
-          user get no data{" "}
+          please wait while our system finds the user you're looking for ...
         </p>
       )}
     </div>
