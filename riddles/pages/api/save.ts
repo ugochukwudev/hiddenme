@@ -1,5 +1,4 @@
 import { log } from "console";
-import { Db } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -39,11 +38,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         },
         { upsert: true }
       );
-
+      const post = await db
+        .collection("posts")
+        .findOne({ _id: ObjectId(postid) });
       res.status(200).json({
         message: "user saved a cup of vawolence 🦄 🦄 +++++++",
-        saved: user.saved,
+        saved: post.saved,
       });
+      console.log(user);
     } else {
       const user = await db.collection("posts").findOneAndUpdate(
         { _id: ObjectId(postid) },
@@ -53,10 +55,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
           },
         }
       );
+      const post = await db
+        .collection("posts")
+        .findOne({ _id: ObjectId(postid) });
       res.status(200).json({
         message: "user unsaved a cup of vawolence 🦄 🦄 ----",
-        saved: user.saved,
+        saved: post.saved,
       });
+      console.log(user);
     }
 
     //db.close();
