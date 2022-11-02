@@ -65,9 +65,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
 
     //db.close();
   }
-  res.status(400).json({
-    message:
-      " 🦄 🦄 you can't comment on this post for now. post under review or deleted",
-  });
 };
 export default handler;

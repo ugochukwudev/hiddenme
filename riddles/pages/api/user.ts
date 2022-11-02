@@ -36,9 +36,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
       user: user,
     });
   }
-  res.status(404).json({
-    message: "An error occured dude",
-  });
 };
 
 export default handler;

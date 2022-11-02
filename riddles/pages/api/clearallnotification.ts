@@ -43,8 +43,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
 
     //db.close();
   }
-  res.status(400).json({
-    message: " 🦄 🦄 are you sure you're an admin ?",
-  });
 };
 export default handler;

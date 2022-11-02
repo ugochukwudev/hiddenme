@@ -49,9 +49,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
   }
 
   //db.close();
-
-  res.status(400).json({
-    message: " 🦄 🦄 your village people are after our database 😂",
-  });
 };
 export default handler;

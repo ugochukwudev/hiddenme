@@ -32,8 +32,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
       user: { user: user },
     });
   }
-  res.status(200).json({
-    message: "awn you have a freaky error 🦄 🦄",
-  });
 };
 export default handler;

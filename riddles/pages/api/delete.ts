@@ -40,11 +40,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
       saved: user,
     });
     console.log(user);
-
-    res.status(400).json({
-      message:
-        "something spiritual 🦄 🦄 your village people are after our database 😂",
-    });
   }
 };
 export default handler;
