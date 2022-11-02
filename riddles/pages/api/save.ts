@@ -1,4 +1,5 @@
 import { log } from "console";
+import { Db } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -43,7 +44,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         message: "user saved a cup of vawolence 🦄 🦄 +++++++",
         saved: user.saved,
       });
-      console.log(user);
+      db.close();
     } else {
       const user = await db.collection("posts").findOneAndUpdate(
         { _id: ObjectId(postid) },
@@ -57,7 +58,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         message: "user unsaved a cup of vawolence 🦄 🦄 ----",
         saved: user.saved,
       });
-      console.log(user);
+      db.close();
     }
 
     //db.close();
