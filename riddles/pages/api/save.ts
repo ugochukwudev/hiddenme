@@ -44,7 +44,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         message: "user saved a cup of vawolence 🦄 🦄 +++++++",
         saved: user.saved,
       });
-      db.close();
     } else {
       const user = await db.collection("posts").findOneAndUpdate(
         { _id: ObjectId(postid) },
@@ -58,7 +57,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         message: "user unsaved a cup of vawolence 🦄 🦄 ----",
         saved: user.saved,
       });
-      db.close();
     }
 
     //db.close();
