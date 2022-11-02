@@ -56,7 +56,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
       message: "user succesfully uploaded a new gist 🦄🦄🦄",
     });
   }
-  res.status(400).send({
+  res.send({
     message: "user unsuccesfully uploaded a new gist 🦄🦄🦄",
   });
 };
