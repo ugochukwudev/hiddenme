@@ -98,6 +98,12 @@ const Home: NextPage = (props: any) => {
   }, []);
   return (
     <>
+      <Head>
+        <meta
+          name="description"
+          content="meet different kind of crazy people"
+        />
+      </Head>
       {user && (
         <div className="bg-[#144881]">
           <p className="z-10 w-full h-1 rounded-full bg-[#ffe149] sticky top-[196px] lg:top-[77px]"></p>
