@@ -73,9 +73,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
       console.log(user);
     }
   }
-  res.status(200).json({
-    message: "omo elewa",
-  });
+
   //db.close();
 };
 export default handler;

@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
 
   if (req.method === "POST") {
     if (!userid || !password || !newpassword) {
-      res.status(422).json({ message: "please re login and try again" });
+      res.status(400).json({ message: "please re login and try again" });
       return;
     }
 
@@ -34,8 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         message:
           "omo otilo. you can't use you'r old password as your new password 😒😒😒😒",
       });
-    }
-    if (user.password === password) {
+    } else {
       const user = await db.collection("users").findOneAndUpdate(
         { _id: ObjectId(userid) },
         {
@@ -52,9 +51,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
       console.log(user);
     }
   }
-  res.status(200).json({
-    message: "omo elewa",
-  });
+
   //db.close();
 };
 export default handler;
