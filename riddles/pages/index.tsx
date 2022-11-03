@@ -4,10 +4,17 @@ import Post from "../components/post";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useState, useLayoutEffect } from "react";
+import Alert from "../components/Alert";
+import { useSelector, useDispatch } from "react-redux";
 
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
 const Home: NextPage = (props: any) => {
+  const dispatch = useDispatch();
+  const show = useSelector(
+    (state: { user: {}; alert: { text: string; show: boolean } }) =>
+      state.alert.show
+  );
   const { post } = props;
   const all = JSON.parse(post);
   console.log(all);
@@ -92,22 +99,13 @@ const Home: NextPage = (props: any) => {
   return (
     <>
       {user && (
-        <div className="bg-[#7B8CA6]">
-          <div className="bg-[#465975] h-fit p-2 z-10 flex-wrap sticky top-[135px]">
-            <Link href="/upload">
-              <motion.button className="bg-white hover:text-white hover:bg-transparent hover:border-[1px] hover:border-white  text-black mt-4 ml-10 p-2 rounded-full font-bold">
-                Add to diary
-              </motion.button>
-            </Link>
-            <Link href="/saved-diary">
-              <button className="bg-white hover:text-white hover:bg-transparent text-black mt-4 ml-10 p-2 rounded-full font-bold">
-                Saved diary
-              </button>
-            </Link>
+        <div className="bg-[#144881]">
+          <p className="z-10 w-full h-1 rounded-full bg-[#ffe149] sticky top-[196px] lg:top-[77px]"></p>
+          <div className="bg-[#0f3661] h-fit p-2 z-10 flex-wrap sticky top-[196px] lg:top-[80px]">
             <Link href="/notifications">
               <button
                 onClick={() => submitnotification()}
-                className="bg-white hover:text-white hover:bg-transparent  text-black mt-4 ml-10 p-2 rounded-full font-bold"
+                className="m-4 text-[16px] text-white hover:underline "
               >
                 {`notification(${notification})`}
               </button>
@@ -116,8 +114,9 @@ const Home: NextPage = (props: any) => {
               <button
                 onClick={() => {
                   window?.localStorage?.setItem("user", JSON.stringify(""));
+                  window.location.pathname = "/login";
                 }}
-                className="bg-white hover:text-white hover:bg-transparent w-[100px] text-black mt-4 ml-6 p-2 rounded-full font-bold"
+                className="m-4 text-[16px] text-white hover:underline "
               >
                 Logout
               </button>
@@ -135,6 +134,7 @@ const Home: NextPage = (props: any) => {
           })}
         </div>
       )}
+      {show && <Alert />}
     </>
   );
 };

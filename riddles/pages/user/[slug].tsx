@@ -4,8 +4,15 @@ import { useEffect, useState } from "react";
 import Post from "../../components/post";
 import Link from "next/link";
 const { MongoClient, ServerApiVersion } = require("mongodb");
-
+import { useSelector, useDispatch } from "react-redux";
+import { setalert, setalertOff, alerttext } from "../../store/alert";
+import Alert from "../../components/Alert";
 const User = (props: any) => {
+  const dispatch = useDispatch();
+  const show = useSelector(
+    (state: { user: {}; alert: { text: string; show: boolean } }) =>
+      state.alert.show
+  );
   const { post } = props;
   const all = JSON?.parse(post);
   console.log(all);
@@ -13,7 +20,7 @@ const User = (props: any) => {
   const posts = all?.user;
   const datas = posts;
   const [user, setUser] = useState([] as any);
-
+  const [message, setMessage] = useState<string>();
   const router = useRouter();
   const slug: any = router.query.slug;
   console.log(slug);
@@ -30,11 +37,12 @@ const User = (props: any) => {
     console.log(data);
     setUser(data);
   };
+
   if (typeof window !== "undefined") {
     console.log("You are on the browser");
     var newObject: any = window.localStorage.getItem("user");
     var data = JSON.parse(newObject);
-    console.log("data", data);
+    console.log("data", data, "");
   }
   useEffect(() => {
     submitData();
@@ -43,6 +51,25 @@ const User = (props: any) => {
     (role: { data: { _id: string } }) => role.data._id == user?.user?._id
   );
   console.log(result);
+  const submitmessage = async () => {
+    const response = await fetch("/api/adminnotification", {
+      method: "POST",
+      body: JSON.stringify({
+        username: `message from admin :  ${user?.user?.name}`,
+        text: message,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const requestdata = await response.json();
+    dispatch(alerttext(data?.message));
+    dispatch(setalert());
+    setTimeout(() => {
+      dispatch(setalertOff());
+    }, 3000);
+  };
   return (
     <div>
       <div className=" w-6/12 ml-auto text-center  mr-auto mt-6 p-4 drop-shadow-[0_35px_35px_#1d2e47] h-fit bg-transparent">
@@ -72,10 +99,21 @@ const User = (props: any) => {
             </p>
           </Link>
         )}
-        {user?.user?.name === "admin" && (
-          <p className="text-white text-xl px-4 py-1 border-2 border-white w-6/12 text-center ml-auto mr-auto mt-10 hover:font-bold rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer">
-            send Notification
-          </p>
+        {data?.user?.user?.name === "admin" && (
+          <>
+            <input
+              onChange={(e) => setMessage(e.target.value)}
+              type="text"
+              placeholder="send notification"
+              className="mt-4 bg-transparent w-6/12 p-4 rounded-full border-[1px] border-white outline-0 text-white font-medium italic leading-[20px] tracking-[-0.5px] "
+            />
+            <p
+              onClick={submitmessage}
+              className="text-white text-xl px-4 py-1 border-2 border-white w-6/12 text-center ml-auto mr-auto mt-10 hover:font-bold rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer"
+            >
+              send Notification
+            </p>
+          </>
         )}
       </div>
 
@@ -87,6 +125,7 @@ const User = (props: any) => {
           please wait while our system finds the user you're looking for ...
         </p>
       )}
+      {show && <Alert />}
     </div>
   );
 };

@@ -38,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
       .updateOne({ _id: ObjectId(id) }, { $set: { notify: 0 } });
 
     res.status(200).json({
-      message: "admin succesfully notified user 🦄 🦄",
+      message: "cleared 🦄 🦄",
     });
 
     //db.close();

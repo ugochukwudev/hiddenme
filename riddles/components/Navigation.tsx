@@ -62,10 +62,10 @@ const Nav = () => {
     ".",
   ];
   return (
-    <div className="top-0 z-50 grid md:grid-cols-2 grid-cols-1 bg-[#1D2639] text-white w-full sticky">
+    <div className="top-[-1px] z-50 h-[200px] lg:h-[80px] grid md:grid-cols-2 grid-cols-1 bg-[#07294d] text-[#ffda33] w-full sticky">
       <Link href="/">
         <motion.div
-          className=" text-2xl italic ml-10 mt-10 cursor-pointer flex "
+          className=" text-2xl italic ml-4 lg:ml-10 mt-5 cursor-pointer flex "
           variants={boxvariants}
           animate="logo"
           initial="hidden"
@@ -79,24 +79,24 @@ const Nav = () => {
           })}
         </motion.div>
       </Link>
-      <ul className="flex p-8 flex-wrap font-semibold text-base leading-[20px]">
-        <Link href="/login">
-          <li className="m-4 hover:bg-transparent hover:text-white hover:border-white border-2  cursor-pointer p-2 w-[100px] text-center rounded-full bg-white text-black">
-            Login
+      <ul className="flex  flex-wrap font-semibold pt-5 gap-4">
+        <Link href="/upload">
+          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#ffc600]  text-[18px] italic ">
+            Create post
           </li>
         </Link>
-        <Link href="/register">
-          <li className="m-4 hover:bg-transparent hover:text-white hover:border-white border-2  cursor-pointer p-2 w-[100px] text-center rounded-full bg-white text-black">
-            Register
+        <Link href="/saved-diary">
+          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#ffc600]  text-[18px] italic ">
+            saved
           </li>
         </Link>
         <Link href="/my-diaries">
-          <li className="m-4 hover:bg-transparent hover:text-white hover:border-white border-2  cursor-pointer p-2 w-[100px] text-center rounded-full bg-white text-black">
+          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#ffc600] text-[18px] italic ">
             My Diaries
           </li>
         </Link>
         <Link href={`user/${id}`}>
-          <li className="m-4 hover:bg-transparent hover:text-white hover:border-white border-2  cursor-pointer p-2 w-[100px] text-center rounded-full bg-white text-black">
+          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#ffc600] text-[18px] italic ">
             {name === "" ? "user" : !name ? "user" : name}
           </li>
         </Link>

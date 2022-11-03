@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { load, unload, userData } from "../store/user";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { setalert, setalertOff, alerttext } from "../store/alert";
+import Alert from "../components/Alert";
 const Login: NextPage = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({
@@ -13,7 +13,10 @@ const Login: NextPage = () => {
     password: "",
   });
   const All = useSelector((state: any) => state.user);
-
+  const show = useSelector(
+    (state: { user: {}; alert: { text: string; show: boolean } }) =>
+      state.alert.show
+  );
   const submitData = async (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(load());
@@ -28,21 +31,18 @@ const Login: NextPage = () => {
     const data = await response.json();
     {
       data && dispatch(unload());
+      dispatch(alerttext(data?.message));
+      dispatch(setalert());
+      setTimeout(() => {
+        dispatch(setalertOff());
+      }, 3000);
     }
     console.log(data);
     window?.localStorage?.setItem("user", JSON.stringify(data));
     {
       (await data) && dispatch(userData(data));
     }
-    {
-      (await data) && data.message === "user succesfully registered"
-        ? toast.success(data.message)
-        : data.message === "user already exist and his password is 123456789"
-        ? toast.info(data.message)
-        : data.message === "Invalid input."
-        ? toast.error(data.message)
-        : toast.error(data.message);
-    }
+
     if (!response.ok) {
       console.log(data || "Something went wrong!");
     }
@@ -57,8 +57,7 @@ const Login: NextPage = () => {
     });
   };
   return (
-    <div className="flex flex-wrap min-h-screen w-full content-center justify-center bg-gray-200 py-10">
-      <ToastContainer position="top-right" />
+    <div className="flex flex-wrap min-h-screen w-full content-center justify-center bg-[#0F3661] py-10">
       <div className="flex shadow-md">
         <div
           className="flex flex-wrap content-center justify-center rounded-l-md bg-white"
@@ -118,7 +117,7 @@ const Login: NextPage = () => {
               <div className="mb-3">
                 <button
                   onClick={(e) => submitData(e)}
-                  className="mb-1.5 block w-full text-center text-white bg-purple-700 hover:bg-purple-900 px-2 py-1.5 rounded-md cursor-pointer"
+                  className="mb-1.5 block w-full text-center text-white bg-[#FFCC16] hover:scale-110 px-2 py-1.5 rounded-md cursor-pointer"
                 >
                   {All.loading ? "loading" : "register"}
                 </button>
@@ -158,6 +157,7 @@ const Login: NextPage = () => {
           />
         </div>
       </div>
+      {show && <Alert />}
     </div>
   );
 };

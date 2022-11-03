@@ -2,12 +2,20 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import Alert from "../components/Alert";
 import Post from "../components/post";
+import { setalert, setalertOff, alerttext } from "../store/alert";
+import { useSelector, useDispatch } from "react-redux";
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const Notifications: NextPage = (props: any) => {
+  const dispatch = useDispatch();
   const { post } = props;
   const all = JSON.parse(post);
   console.log(all);
+  const show = useSelector(
+    (state: { user: {}; alert: { text: string; show: boolean } }) =>
+      state.alert.show
+  );
   // const datas = post.user.user;
   const posts = all?.user;
   const [datas, setDatas] = useState([]);
@@ -35,7 +43,13 @@ const Notifications: NextPage = (props: any) => {
     });
 
     const data = await response.json();
-
+    {
+      data && dispatch(alerttext(data?.message));
+      dispatch(setalert());
+      setTimeout(() => {
+        dispatch(setalertOff());
+      }, 3000);
+    }
     window.location.pathname = "/";
   };
   return (
@@ -76,6 +90,7 @@ const Notifications: NextPage = (props: any) => {
               );
             }
           )}
+        {show && <Alert />}
       </div>
     </>
   );

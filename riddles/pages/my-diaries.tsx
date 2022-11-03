@@ -3,15 +3,22 @@ import Head from "next/head";
 import Image from "next/image";
 import Post from "../components/post";
 import { useEffect, useState } from "react";
+import Alert from "../components/Alert";
+import { useSelector, useDispatch } from "react-redux";
+import { setalert, setalertOff, alerttext } from "../store/alert";
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const Diaries: NextPage = (props: any) => {
+  const dispatch = useDispatch();
   const { post } = props;
   const all = JSON.parse(post);
   console.log(all);
   // const datas = post.user.user;
   const posts = all?.user;
   const datas = posts;
-
+  const show = useSelector(
+    (state: { user: {}; alert: { text: string; show: boolean } }) =>
+      state.alert.show
+  );
   const [datacontent, setData] = useState("");
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -21,6 +28,12 @@ const Diaries: NextPage = (props: any) => {
     }
     {
       data && setData(data.user.user._id);
+
+      dispatch(alerttext(data?.message));
+      dispatch(setalert());
+      setTimeout(() => {
+        dispatch(setalertOff());
+      }, 3000);
     }
 
     {
@@ -32,7 +45,7 @@ const Diaries: NextPage = (props: any) => {
   );
   console.log(result);
   return (
-    <div className="bg-[#7B8CA6] ">
+    <div className="bg-[#113f6f] ">
       {result.lenght < 1 && (
         <p className="text-green-900 text-center font-black text-[40px]">
           User have no post yet{" "}
@@ -41,6 +54,7 @@ const Diaries: NextPage = (props: any) => {
       {result?.map((post: {}, index: number) => {
         return <Post key={index * Math.random()} {...post} />;
       })}
+      {show && <Alert />}
     </div>
   );
 };

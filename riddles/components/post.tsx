@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-
+import { alerttext, setalert, setalertOff } from "../store/alert";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -54,6 +54,8 @@ const Post: NextPage = (props: any) => {
     console.log("name", name);
     console.log("props", props);
     setId(data?.user?.user?._id);
+    console.log("id", id);
+
     // let button = document?.querySelectorAll(".bg-yellow-500");
     // button?.forEach((e: any) => {
     //   e.click();
@@ -91,7 +93,12 @@ const Post: NextPage = (props: any) => {
     {
       data && dispatch(unload());
     }
-    console.log(data);
+    console.log(data.message);
+    dispatch(alerttext(data?.message));
+    dispatch(setalert());
+    setTimeout(() => {
+      dispatch(setalertOff());
+    }, 3000);
     {
       data.comment && setComments(data.comment);
     }
@@ -118,6 +125,11 @@ const Post: NextPage = (props: any) => {
     const data = await response.json();
     {
       data && dispatch(unload());
+      dispatch(alerttext(data?.message));
+      dispatch(setalert());
+      setTimeout(() => {
+        dispatch(setalertOff());
+      }, 3000);
     }
     console.log(data);
     {
@@ -147,6 +159,11 @@ const Post: NextPage = (props: any) => {
     const data = await response.json();
     {
       data && dispatch(unload());
+      dispatch(alerttext(data?.message));
+      dispatch(setalert());
+      setTimeout(() => {
+        dispatch(setalertOff());
+      }, 3000);
     }
     console.log(data);
     if (!response.ok) {
@@ -205,6 +222,11 @@ const Post: NextPage = (props: any) => {
     const data = await response.json();
     {
       data && dispatch(unload());
+      dispatch(alerttext(data?.message));
+      dispatch(setalert());
+      setTimeout(() => {
+        dispatch(setalertOff());
+      }, 3000);
     }
     console.log(data);
     {
@@ -234,17 +256,16 @@ const Post: NextPage = (props: any) => {
     userid: string
   ) => {
     dispatch(load());
-    setUser({
-      userid,
-      message,
-      postid: props._id,
-      username,
-    });
     console.log(user);
 
     const response = await fetch("/api/deletecomment", {
       method: "POST",
-      body: JSON.stringify(user),
+      body: JSON.stringify({
+        userid,
+        message,
+        postid: props._id,
+        username,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -253,25 +274,26 @@ const Post: NextPage = (props: any) => {
     const data = await response.json();
     {
       data && dispatch(unload());
+      dispatch(alerttext(data?.message));
+      dispatch(setalert());
+      setTimeout(() => {
+        dispatch(setalertOff());
+      }, 3000);
     }
     {
       data.comment && setComments(data.comment);
     }
     console.log(data);
-    {
-      (await data) && data.message === "user succesfully registered"
-        ? toast.success(data.message)
-        : data.message === "user already exist and his password is 123456789"
-        ? toast.info(data.message)
-        : data.message === "Invalid input."
-        ? toast.error(data.message)
-        : toast.info(data.message);
-    }
+
     if (!response.ok) {
       console.log(data || "Something went wrong!");
     }
   };
   const All = useSelector((state: any) => state.user);
+  let time = props?.data?.createdAt;
+  var date = new Date(time);
+  var readable_date = date.toString().slice(0, 25);
+  //console.log("timej", date.toString().slice(0, 25));
 
   const changeComment = () => {
     setShowcomment((prev) => !prev);
@@ -292,9 +314,9 @@ const Post: NextPage = (props: any) => {
   return (
     <>
       {
-        <div className="bg-[#7B8CA6] h-fit drop-shadow-[0_3px_3px_#000] text-white lg:w-6/12 ml-auto mr-auto mt-10 mb-10 border-2 diary border-[rgba(0,0,0,0.05)] w-11/12 rounded-xl">
-          <div className=" lg:w-full mb-10  bg-[#1D2639] rounded-t-xl h-fit w-full">
-            <div className="flex  items-center h-[60%] md:w-10/12 justify-between ml-auto mr-auto">
+        <div className="bg-[#19589b] h-fit drop-shadow-[0_3px_3px_#000] text-white lg:w-6/12 ml-auto mr-auto mt-10 mb-10 border-2 diary border-[rgba(0,0,0,0.05)] w-11/12 rounded-xl">
+          <div className=" lg:w-full mb-10  bg-[#07294d] rounded-t-xl h-fit w-full">
+            <div className="flex  items-center h-[60%] md:w-10/12 justify-between ml-auto mr-auto px-4">
               <img
                 className=" mt-5 ml-2 w-[50px] h-[50px] rounded-full "
                 alt=""
@@ -303,14 +325,14 @@ const Post: NextPage = (props: any) => {
               <Link href={`/user/${props?.data?._id}`}>
                 <p className=" mt-5 ml-2 cursor-pointer">{props?.data?.name}</p>
               </Link>
-              <p className=" mt-5 ml-2 text-xs">{props?.data?.createdAt}</p>
+              <p className=" mt-5 ml-2 text-xs">{readable_date}</p>
             </div>
-            <p className="text-center mb-4 mt-10">{props?.title}</p>
+            <p className=" mb-4 mt-10 px-6 text-start">{props?.title}</p>
           </div>
 
           {props?.image && (
             <motion.img
-              className="ml-auto mr-auto rounded-[8px] w-3/12 md:w-[30%] "
+              className="ml-auto mr-auto rounded-[8px] w-3/12 max-h-[300px] md:w-[30%] "
               whileHover={{
                 scale: 1,
               }}
@@ -318,13 +340,13 @@ const Post: NextPage = (props: any) => {
                 width: "80%",
                 height: "50%",
               }}
-              drag
-              dragConstraints={{
-                right: 5,
-                left: 5,
-                top: 3,
-                bottom: 3,
-              }}
+              // drag
+              // dragConstraints={{
+              //   right: 5,
+              //   left: 5,
+              //   top: 3,
+              //   bottom: 3,
+              // }}
               //variants={variants}
               //animate="lion"
               src={props.image !== "" ? props.image : ""}
@@ -335,7 +357,7 @@ const Post: NextPage = (props: any) => {
             {props?.text}
             <span className="cursor-pointer">ReadMore...</span>
           </p>
-          <p className="ml-2 italic font-semibold">
+          <p className="ml-2 italic font-semibold text-[#ffcc16]">
             {vawo?.length === 1
               ? `${vawo?.length} person loves this post`
               : vawo?.length === 0
@@ -353,7 +375,7 @@ const Post: NextPage = (props: any) => {
               onClick={() => {
                 submitVawolence();
               }}
-              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-black text-white"
+              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-white text-black"
             >
               {!agree ? `love` : `unlove`}
             </motion.i>
@@ -367,7 +389,7 @@ const Post: NextPage = (props: any) => {
               onClick={() => {
                 submitSaved("test", "test");
               }}
-              className="p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-black text-white"
+              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-white text-black"
             >
               {!ispostSaved ? `save` : `unsave`}
             </motion.i>
@@ -379,7 +401,7 @@ const Post: NextPage = (props: any) => {
                 scale: 1.3,
               }}
               onClick={() => changeComment()}
-              className="p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-black text-white"
+              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-white text-black"
             >
               comments..
             </motion.i>
@@ -394,7 +416,7 @@ const Post: NextPage = (props: any) => {
                 onClick={() => {
                   submitdelete();
                 }}
-                className="p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-black text-white"
+                className="m-2 text-white bg-black px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
               >
                 delete
               </motion.i>
@@ -409,7 +431,7 @@ const Post: NextPage = (props: any) => {
                 onClick={() => {
                   submitdelete();
                 }}
-                className="p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-black text-white"
+                className="m-2 text-white bg-black px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
               >
                 delete{" "}
               </motion.i>
@@ -417,7 +439,7 @@ const Post: NextPage = (props: any) => {
           </div>
           <div className="flex ">
             <input
-              className="m-2 text-black outline-none border-none p-2 border-[2px] rounded-2xl "
+              className="m-2 text-white bg-black px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
               placeholder="comment osiso"
               value={com}
               onChange={(e) => {
@@ -426,7 +448,7 @@ const Post: NextPage = (props: any) => {
             />
             <button
               onClick={submitcom}
-              className="bg-yellow-500 mr-4 text-white p-2 h-[40px] bold w-[100px]  mt-2 rounded-full"
+              className="bg-[#ffc600] mr-4 text-white p-2 h-[40px] bold w-[100px]  mt-2 rounded-full"
             >
               {All.loading ? "loading" : "submit"}
             </button>
@@ -436,7 +458,7 @@ const Post: NextPage = (props: any) => {
               return (
                 <div key={i} className="w-fit flex ">
                   <img
-                    className=" rounded-full h-[50px] w-[50px]"
+                    className=" rounded-full h-[25px] w-[25px]"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS03bhrOEaH7FfjBpoKth3GuRHbgwPaZkl2RTTteMn3g&s"
                     alt="icon"
                   />
@@ -449,7 +471,7 @@ const Post: NextPage = (props: any) => {
                     </Link>
                     <span className="font-semibold italic ml-4">
                       {comment.message}{" "}
-                      {id === comment.userId && (
+                      {id === comment.userid && (
                         <span
                           onClick={() =>
                             submitDeleteComment(

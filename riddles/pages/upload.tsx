@@ -4,11 +4,14 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { load, unload } from "../store/user";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import { setalert, setalertOff, alerttext } from "../store/alert";
+import Alert from "../components/Alert";
 const Upload: NextPage = () => {
   const dispatch = useDispatch();
+  const show = useSelector(
+    (state: { user: {}; alert: { text: string; show: boolean } }) =>
+      state.alert.show
+  );
   const [datas, setData] = useState();
   const [Image, setImage] = useState({} as any);
   const [create, setCreate] = useState({} as any);
@@ -59,18 +62,14 @@ const Upload: NextPage = () => {
     const data = await response.json();
     {
       data && dispatch(unload());
+      dispatch(alerttext(data?.message));
+      dispatch(setalert());
+      setTimeout(() => {
+        dispatch(setalertOff());
+      }, 3000);
     }
     console.log(data);
 
-    {
-      (await data) && data.message === "user succesfully registered"
-        ? toast.success(data.message)
-        : data.message === "user already exist and his password is 123456789"
-        ? toast.info(data.message)
-        : data.message === "Invalid input."
-        ? toast.error(data.message)
-        : toast.info(data.message);
-    }
     if (!response.ok) {
       console.log(data || "Something went wrong!");
     }
@@ -81,7 +80,9 @@ const Upload: NextPage = () => {
   const All = useSelector((state: any) => state.user);
   return (
     <>
-      <h1 className="text-2xl utalic font-bold text-center">Add new diary</h1>
+      <h1 className="text-2xl utalic font-bold text-white mt-4 text-center">
+        Add new diary
+      </h1>
       <p className="text-red-600 text-center w-10/12 ml-auto mr-auto">
         Note: only images can be accepted . videos and audios are not surpotted.
         file above 1mb can't be uploaded. we're managing our database
@@ -93,7 +94,7 @@ const Upload: NextPage = () => {
         alt="pick an image for preview"
       />
       <textarea
-        className="w-6/12 block ml-auto mr-auto resize-none outline-none mt-10 mb-10 border-[.05px] border-[black] rounded-[6px]"
+        className="w-6/12 block p-4 ml-auto mr-auto resize-none outline-none mt-10 mb-10 border-[.05px] border-[black] rounded-[6px]"
         placeholder="title ..."
         onChange={(e) => {
           setUserData(e.target.name, e.target.value);
@@ -102,7 +103,7 @@ const Upload: NextPage = () => {
         name="title"
       ></textarea>
       <textarea
-        className="w-6/12 h-[30vh] block ml-auto mr-auto resize-none outline-none mt-10 mb-10 border-[.05px] border-[black] rounded-[6px]"
+        className="w-6/12 h-[30vh] p-4 block ml-auto mr-auto resize-none outline-none mt-10 mb-10 border-[.05px] border-[black] rounded-[6px]"
         placeholder="write your story ..."
         value={user.text}
         onChange={(e) => {
@@ -125,12 +126,12 @@ const Upload: NextPage = () => {
 
         <button
           onClick={submitData}
-          className="mb-10 p-[10px] bg-purple-500 text-white rounded-[12px] w-[50%] -[50px] mt-10"
+          className="mb-10 p-[10px] bg-[#ffcc16] text-white rounded-[12px] w-[50%] -[50px] mt-10"
         >
           {All.loading ? "loading" : "upload your mind ..."}
         </button>
       </div>
-      <ToastContainer />
+      {show && <Alert />}
     </>
   );
 };
