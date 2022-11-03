@@ -36,11 +36,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
     const db = await client.db("hidden");
     const user = await db.collection("users").findOne({ email: email });
     if (user?.email !== email) {
-      res.status(200).json({
+      res.status(400).json({
         message: "omo otilo. you're doing something wrong 😒😒😒😒",
       });
-    }
-    if (user.email === email) {
+    } else {
       let key = Math.random() + 10 * 5;
       const user = await db.collection("users").findOneAndUpdate(
         { email: email },
