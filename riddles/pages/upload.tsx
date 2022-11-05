@@ -6,7 +6,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { load, unload } from "../store/user";
 import { setalert, setalertOff, alerttext } from "../store/alert";
 import Alert from "../components/Alert";
+import { useRouter } from "next/router";
 const Upload: NextPage = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const show = useSelector(
     (state: { user: {}; alert: { text: string; show: boolean } }) =>
@@ -45,8 +47,18 @@ const Upload: NextPage = () => {
     if (typeof window !== "undefined") {
       console.log("You are on the browser");
       var newObject: any = window.localStorage.getItem("user");
+      var data = JSON?.parse(newObject);
+    }
+    {
+      !data && router.push("/login");
+    }
+  }, []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("You are on the browser");
+      var newObject: any = window.localStorage.getItem("user");
       var data = JSON.parse(newObject);
-      setData(data.user.user);
+      setData(data?.user?.user);
     }
   }, []);
   const submitData = async () => {

@@ -229,15 +229,7 @@ const Post: NextPage = (props: any) => {
       }, 3000);
     }
     console.log(data);
-    {
-      (await data) && data.message === "user succesfully registered"
-        ? toast.success(data.message)
-        : data.message === "user already exist and his password is 123456789"
-        ? toast.info(data.message)
-        : data.message === "Invalid input."
-        ? toast.error(data.message)
-        : toast.info(data.message);
-    }
+    
     if (!response.ok) {
       console.log(data || "Something went wrong!");
     }
@@ -311,17 +303,34 @@ const Post: NextPage = (props: any) => {
     agree ? setSupport(false) : setSupport(true);
     ispostSaved ? setSaved(false) : setSaved(true);
   }, [agree]);
+  const verify =
+    props.data.name == "Emmanuel " ||
+    props.data.name == "test" ||
+    props.data.name == "Director Tech"
+      ? true
+      : false;
+  console.log(verify, props.data.name);
+
   return (
     <>
       {
         <div className="bg-[#19589b] h-fit drop-shadow-[0_3px_3px_#000] text-white lg:w-6/12 ml-auto mr-auto mt-10 mb-10 border-2 diary border-[rgba(0,0,0,0.05)] w-11/12 rounded-xl">
           <div className=" lg:w-full mb-10  bg-[#07294d] rounded-t-xl h-fit w-full">
             <div className="flex  items-center h-[60%] md:w-10/12 justify-between ml-auto mr-auto px-4">
-              <img
-                className=" mt-5 ml-2 w-[50px] h-[50px] rounded-full "
-                alt=""
-                src="/wolf.png"
-              />
+              {!verify && (
+                <img
+                  className=" mt-5 ml-2 w-[50px] h-[50px] rounded-full "
+                  alt=""
+                  src="/wolf.png"
+                />
+              )}
+              {verify && (
+                <img
+                  className=" mt-5 ml-2 w-[50px] h-[50px] rounded-full "
+                  alt=""
+                  src="/verify.png"
+                />
+              )}
               <Link href={`/user/${props?.data?._id}`}>
                 <p className=" mt-5 ml-2 cursor-pointer">{props?.data?.name}</p>
               </Link>
@@ -364,7 +373,7 @@ const Post: NextPage = (props: any) => {
               ? `nobody loves this post yet`
               : `${vawo?.length} people loves this post`}
           </p>
-          <div className="flex ">
+          <div className="flex flex-wrap">
             <motion.i
               whileHover={{
                 scale: 1.1,
@@ -438,8 +447,8 @@ const Post: NextPage = (props: any) => {
             ) : null}
           </div>
           <div className="flex ">
-            <input
-              className="m-2 text-white bg-black px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
+            <textarea
+              className="m-2 text-white resize-none bg-black px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
               placeholder="comment osiso"
               value={com}
               onChange={(e) => {

@@ -70,14 +70,29 @@ const User = (props: any) => {
       dispatch(setalertOff());
     }, 3000);
   };
+  const verify =
+    user?.user?.name == "Emmanuel " ||
+    user?.user?.name == "test" ||
+    user?.user?.name == "Director Tech"
+      ? true
+      : false;
   return (
     <div>
-      <div className=" w-6/12 ml-auto text-center  mr-auto mt-6 p-4 drop-shadow-[0_35px_35px_#1d2e47] h-fit bg-transparent">
-        <img
-          className="w-3/12 h-[50%] ml-auto mr-auto  rounded-[50%] "
-          src="/wolf.png"
-          alt="no data"
-        />
+      <div className="w-full lg:w-6/12 ml-auto text-center  mr-auto mt-6 p-4 drop-shadow-[0_35px_35px_#1d2e47] h-fit bg-transparent">
+        {!verify && (
+          <img
+            className="w-3/12 h-[50%] ml-auto mr-auto  rounded-[50%] "
+            src="/wolf.png"
+            alt="no data"
+          />
+        )}
+        {verify && (
+          <img
+            className="w-3/12 h-[50%] ml-auto mr-auto  rounded-[50%] "
+            src="/verify.png"
+            alt="no data"
+          />
+        )}
         <p className="text-white font-bold text-xl cursor-pointer">
           {user?.user?.name}
         </p>
@@ -87,14 +102,14 @@ const User = (props: any) => {
           </p>
         )}
         {user?.user && (
-          <p className="text-white text-xl px-4 border-2 py-1 border-white w-3/12 text-center ml-auto mr-auto hover:font-bold mt-10 rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer">
+          <p className="text-white text-xl px-4 border-2 py-1 border-white  text-center ml-auto mr-auto hover:font-bold mt-10 rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer">
             Report user
           </p>
         )}
 
         {user?.user?._id === slug && (
           <Link href="/changepassword">
-            <p className="text-white text-xl px-4 py-1 border-2 border-white w-fit text-center ml-auto mr-auto hover:font-bold mt-10 rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer">
+            <p className="text-white text-xl px-2 py-1 border-2  border-white w-fit text-center ml-auto mr-auto hover:font-bold mt-10 rounded-full hover:bg-white hover:text-[#1d2e47] cursor-pointer">
               change password
             </p>
           </Link>
@@ -117,13 +132,19 @@ const User = (props: any) => {
         )}
       </div>
 
-      {result?.map((post: {}, index: number) => {
-        return <Post key={index * Math.random()} {...post} />;
-      })}
+      {user?.user?._id !== data._id &&
+        result?.map((post: {}, index: number) => {
+          return <Post key={index * Math.random()} {...post} />;
+        })}
       {result < 1 && (
-        <p className="text-center text-white font-extrabold italic ">
-          please wait while our system finds the user you're looking for ...
-        </p>
+        <>
+          <p className="text-center text-white font-extrabold italic ">
+            please wait while our system finds the user you're looking for ...
+          </p>
+          <p className="text-center text-white font-extrabold italic ">
+            Loading user data ...
+          </p>
+        </>
       )}
       {show && <Alert />}
     </div>
