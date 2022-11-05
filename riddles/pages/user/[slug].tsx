@@ -55,8 +55,8 @@ const User = (props: any) => {
     const response = await fetch("/api/adminnotification", {
       method: "POST",
       body: JSON.stringify({
-        username: `message from admin :  ${user?.user?.name}`,
-        text: message,
+        username: user?.user?.name,
+        text: `message from admin. dear ${user?.user?.name},  ${message}`,
       }),
       headers: {
         "Content-Type": "application/json",
