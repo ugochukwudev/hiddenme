@@ -77,7 +77,7 @@ const User = (props: any) => {
       ? true
       : false;
   return (
-    <div className="bg-[#72757e]">
+    <div className="bg-gray-600">
       <div className="w-full lg:w-6/12 ml-auto text-center  mr-auto mt-6 p-4 drop-shadow-[0_35px_35px_#1d2e47] h-fit bg-transparent">
         {!verify && (
           <img

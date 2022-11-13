@@ -91,7 +91,7 @@ const Upload: NextPage = () => {
   };
   const All = useSelector((state: any) => state.user);
   return (
-    <div className="bg-[#72757e]">
+    <div className="bg-gray-600">
       <h1 className="text-2xl italic font-bold text-white mt-4 text-center">
         Add new diary
       </h1>

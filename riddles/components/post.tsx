@@ -306,7 +306,8 @@ const Post: NextPage = (props: any) => {
   const verify =
     props.data.name == "Emmanuel " ||
     props.data.name == "test" ||
-    props.data.name == "Director Tech"
+    props.data.name == "Director Tech" ||
+    props.data.name == "Director Tech II"
       ? true
       : false;
   console.log(verify, props.data.name);
@@ -314,33 +315,33 @@ const Post: NextPage = (props: any) => {
   return (
     <>
       {
-        <div className="bg-[#72757e] h-fit drop-shadow-[0_3px_3px_#000] text-white lg:w-6/12 ml-auto mr-auto mt-10 mb-10 border-2 diary border-[rgba(0,0,0,0.05)] w-11/12 rounded-xl">
-          <div className=" lg:w-full mb-10  bg-[#383a3e] rounded-t-xl h-fit w-full">
-            <div className="flex  items-center h-[60%] md:w-10/12 justify-between ml-auto mr-auto px-4">
+        <div className="bg-[#000000] h-fit drop-shadow-[0_3px_3px_#000] text-white lg:w-6/12 ml-auto mr-auto mt-10 mb-10 border-2 diary border-[rgba(0,0,0,0.05)] w-11/12 rounded-xl">
+          <div className=" lg:w-full mb-10  bg-purple-900 rounded-t-xl h-fit w-full">
+            <div className="flex  items-center h-[60%] md:w-10/12 justify-between ml-auto mr-auto lg:px-4">
               {!verify && (
                 <img
-                  className=" mt-5 ml-2 w-[50px] h-[50px] rounded-full "
+                  className=" mt-5 ml-2 w-[25px] lg:w-[50px] h-[25px] lg:h-[50px] rounded-full "
                   alt=""
                   src="/wolf.png"
                 />
               )}
               {verify && (
                 <img
-                  className=" mt-5 ml-2 w-[50px] h-[50px] rounded-full "
+                  className=" mt-5 ml-2 w-[25px] lg:w-[50px] h-[25px]  lg:h-[50px] rounded-full "
                   alt=""
                   src="/verify.png"
                 />
               )}
               <Link href={`/user/${props?.data?._id}`}>
-                <p className=" mt-5 ml-2 text-[#fffffe] cursor-pointer">
+                <p className=" mt-5  text-[#fffffe] cursor-pointer">
                   {props?.data?.name}
                 </p>
               </Link>
-              <p className=" mt-5 ml-2 text-xs text-[#fffffe]">
+              <p className=" mt-5 w-[150px] lg:w-fit  text-[#fffffe]">
                 {readable_date}
               </p>
             </div>
-            <p className=" mb-4 mt-10 px-6 text-start text-[#fffffe]">
+            <p className=" mb-4 mt-10 px-6 text-center text-[20px] leading-[25px] text-[#fffffe]">
               {props?.title}
             </p>
           </div>
@@ -368,7 +369,7 @@ const Post: NextPage = (props: any) => {
               alt="icon"
             />
           )}
-          <p className="w-11/12 ml-auto text-[#94a1b2] mr-auto">
+          <p className="w-11/12 ml-auto text-[white] mr-auto">
             {props?.text}
             <span className="cursor-pointer">{"  "}ReadMore...</span>
           </p>
@@ -390,7 +391,7 @@ const Post: NextPage = (props: any) => {
               onClick={() => {
                 submitVawolence();
               }}
-              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-[#7f5af0] text-[#fffffe]"
+              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-purple-900 text-[#fffffe]"
             >
               {!agree ? `love` : `unlove`}
             </motion.i>
@@ -404,7 +405,7 @@ const Post: NextPage = (props: any) => {
               onClick={() => {
                 submitSaved("test", "test");
               }}
-              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-[#7f5af0] text-[#fffffe]"
+              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-purple-900 text-[#fffffe]"
             >
               {!ispostSaved ? `save` : `unsave`}
             </motion.i>
@@ -416,7 +417,7 @@ const Post: NextPage = (props: any) => {
                 scale: 1.3,
               }}
               onClick={() => changeComment()}
-              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-[#7f5af0] text-[#fffffe]"
+              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-purple-900 text-[#fffffe]"
             >
               comments..
             </motion.i>
@@ -431,7 +432,7 @@ const Post: NextPage = (props: any) => {
                 onClick={() => {
                   submitdelete();
                 }}
-                className="m-2 text-[#fffffe] bg-[#7f5af0] px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
+                className="m-2 text-[#fffffe] bg-purple-900 px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
               >
                 delete
               </motion.i>
@@ -446,7 +447,7 @@ const Post: NextPage = (props: any) => {
                 onClick={() => {
                   submitdelete();
                 }}
-                className="m-2 text-[#fffffe] bg-[#7f5af0] px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
+                className="m-2 text-[#fffffe] bg-purple-900 px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
               >
                 delete{" "}
               </motion.i>
@@ -463,7 +464,7 @@ const Post: NextPage = (props: any) => {
             />
             <button
               onClick={submitcom}
-              className="bg-[#7f5af0] mr-4 text-white p-2 h-[40px] bold w-[100px]  mt-2 rounded-full"
+              className="bg-purple-900 mr-4 text-white p-2 h-[40px] bold w-[100px]  mt-2 rounded-full"
             >
               {All.loading ? "loading" : "submit"}
             </button>

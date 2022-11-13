@@ -62,7 +62,7 @@ const Nav = () => {
     ".",
   ];
   return (
-    <div className="top-[-1px] z-50 h-[200px] lg:h-[80px] grid md:grid-cols-2 grid-cols-1 bg-[#242629] text-[#fffffe] w-full sticky">
+    <div className="top-[-1px] z-50 h-[200px] lg:h-[80px] grid md:grid-cols-2 grid-cols-1 bg-pink-900  text-[#fffffe] w-[105vw] overflow-x-hidden sticky">
       <Link href="/">
         <motion.div
           className=" text-2xl italic ml-4 lg:ml-10 mt-5 cursor-pointer flex "
