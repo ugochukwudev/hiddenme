@@ -62,7 +62,7 @@ const Nav = () => {
     ".",
   ];
   return (
-    <div className="top-[-1px] z-50 h-[200px] lg:h-[80px] grid md:grid-cols-2 grid-cols-1 bg-[#07294d] text-[#ffda33] w-full sticky">
+    <div className="top-[-1px] z-50 h-[200px] lg:h-[80px] grid md:grid-cols-2 grid-cols-1 bg-[#242629] text-[#fffffe] w-full sticky">
       <Link href="/">
         <motion.div
           className=" text-2xl italic ml-4 lg:ml-10 mt-5 cursor-pointer flex "
@@ -81,22 +81,22 @@ const Nav = () => {
       </Link>
       <ul className="flex  flex-wrap font-semibold pt-5 gap-4">
         <Link href="/upload">
-          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#ffc600]  text-[18px] italic ">
+          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#fffffe]  text-[18px] italic ">
             Create post
           </li>
         </Link>
         <Link href="/saved-diary">
-          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#ffc600]  text-[18px] italic ">
+          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#fffffe]  text-[18px] italic ">
             saved
           </li>
         </Link>
         <Link href="/my-diaries">
-          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#ffc600] text-[18px] italic ">
+          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#fffffe] text-[18px] italic ">
             My Diaries
           </li>
         </Link>
         <Link href={`user/${id}`}>
-          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#ffc600] text-[18px] italic ">
+          <li className=" hover:underline  cursor-pointer p-2 text-center text-[#fffffe] text-[18px] italic ">
             {name === "" ? "user" : !name ? "user" : name}
           </li>
         </Link>

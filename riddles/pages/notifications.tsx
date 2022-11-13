@@ -77,8 +77,8 @@ const Notifications: NextPage = (props: any) => {
               );
               console.log("result", post[0]?._id);
               return (
-                <div key={i} className="w-full text-center p-4">
-                  <span className="border-2 border-yellow-500 text-white cursor-pointer rounded-full p-2 m-4">
+                <div key={i} className="w-full text-center h-fit p-4">
+                  <span className="border-2 border-yellow-500 h-fit w-fit text-white cursor-pointer rounded-full">
                     {notification.message}
                   </span>
                   {post[0]?._id !== undefined && (

@@ -105,9 +105,9 @@ const Home: NextPage = (props: any) => {
         />
       </Head>
       {user && (
-        <div className="bg-[#144881]">
-          <p className="z-10 w-full h-1 rounded-full bg-[#ffe149] sticky top-[196px] lg:top-[77px]"></p>
-          <div className="bg-[#0f3661] h-fit p-2 z-10 flex-wrap sticky top-[196px] lg:top-[80px]">
+        <div className="bg-[#242629]">
+          <p className="z-10 w-full h-1 rounded-full bg-[#7f5af0] sticky top-[196px] lg:top-[77px]"></p>
+          <div className="bg-[#16161a] h-fit p-2 z-10 flex-wrap sticky top-[196px] lg:top-[80px]">
             <Link href="/notifications">
               <button
                 onClick={() => submitnotification()}

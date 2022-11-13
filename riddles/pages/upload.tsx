@@ -91,8 +91,8 @@ const Upload: NextPage = () => {
   };
   const All = useSelector((state: any) => state.user);
   return (
-    <>
-      <h1 className="text-2xl utalic font-bold text-white mt-4 text-center">
+    <div className="bg-[#72757e]">
+      <h1 className="text-2xl italic font-bold text-white mt-4 text-center">
         Add new diary
       </h1>
       <p className="text-red-600 text-center w-10/12 ml-auto mr-auto">
@@ -138,13 +138,13 @@ const Upload: NextPage = () => {
 
         <button
           onClick={submitData}
-          className="mb-10 p-[10px] bg-[#ffcc16] text-white rounded-[12px] w-[50%] -[50px] mt-10"
+          className="mb-10 p-[10px] bg-[#7f5af0] text-white rounded-[12px] w-[50%] -[50px] mt-10"
         >
           {All.loading ? "loading" : "upload your mind ..."}
         </button>
       </div>
       {show && <Alert />}
-    </>
+    </div>
   );
 };
 export default Upload;

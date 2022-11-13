@@ -66,7 +66,7 @@ const forgotpassword = () => {
         />
         <button
           onClick={() => submitdata()}
-          className="bg-[#ffc600] text-white font-bold  rounded-full hover:text-[#1D2639] hover:bg-white hover:border-[1px] hover:border-[#1D2639]"
+          className="bg-[#7f5af0] text-white font-bold  rounded-full hover:text-[#1D2639] hover:bg-white hover:border-[1px] hover:border-[#1D2639]"
         >
           Change password
         </button>

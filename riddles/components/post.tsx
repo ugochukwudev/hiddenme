@@ -229,7 +229,7 @@ const Post: NextPage = (props: any) => {
       }, 3000);
     }
     console.log(data);
-    
+
     if (!response.ok) {
       console.log(data || "Something went wrong!");
     }
@@ -314,8 +314,8 @@ const Post: NextPage = (props: any) => {
   return (
     <>
       {
-        <div className="bg-[#19589b] h-fit drop-shadow-[0_3px_3px_#000] text-white lg:w-6/12 ml-auto mr-auto mt-10 mb-10 border-2 diary border-[rgba(0,0,0,0.05)] w-11/12 rounded-xl">
-          <div className=" lg:w-full mb-10  bg-[#07294d] rounded-t-xl h-fit w-full">
+        <div className="bg-[#72757e] h-fit drop-shadow-[0_3px_3px_#000] text-white lg:w-6/12 ml-auto mr-auto mt-10 mb-10 border-2 diary border-[rgba(0,0,0,0.05)] w-11/12 rounded-xl">
+          <div className=" lg:w-full mb-10  bg-[#383a3e] rounded-t-xl h-fit w-full">
             <div className="flex  items-center h-[60%] md:w-10/12 justify-between ml-auto mr-auto px-4">
               {!verify && (
                 <img
@@ -332,23 +332,29 @@ const Post: NextPage = (props: any) => {
                 />
               )}
               <Link href={`/user/${props?.data?._id}`}>
-                <p className=" mt-5 ml-2 cursor-pointer">{props?.data?.name}</p>
+                <p className=" mt-5 ml-2 text-[#fffffe] cursor-pointer">
+                  {props?.data?.name}
+                </p>
               </Link>
-              <p className=" mt-5 ml-2 text-xs">{readable_date}</p>
+              <p className=" mt-5 ml-2 text-xs text-[#fffffe]">
+                {readable_date}
+              </p>
             </div>
-            <p className=" mb-4 mt-10 px-6 text-start">{props?.title}</p>
+            <p className=" mb-4 mt-10 px-6 text-start text-[#fffffe]">
+              {props?.title}
+            </p>
           </div>
 
           {props?.image && (
             <motion.img
               className="ml-auto mr-auto rounded-[8px] w-3/12 max-h-[300px] md:w-[30%] "
-              whileHover={{
-                scale: 1,
-              }}
-              whileTap={{
-                width: "80%",
-                height: "50%",
-              }}
+              // whileHover={{
+              //   scale: 1,
+              // }}
+              // whileTap={{
+              //   width: "80%",
+              //   height: "50%",
+              // }}
               // drag
               // dragConstraints={{
               //   right: 5,
@@ -362,11 +368,11 @@ const Post: NextPage = (props: any) => {
               alt="icon"
             />
           )}
-          <p className="w-11/12 ml-auto mr-auto">
+          <p className="w-11/12 ml-auto text-[#94a1b2] mr-auto">
             {props?.text}
-            <span className="cursor-pointer">ReadMore...</span>
+            <span className="cursor-pointer">{"  "}ReadMore...</span>
           </p>
-          <p className="ml-2 italic font-semibold text-[#ffcc16]">
+          <p className="ml-2 italic font-semibold text-[#fffffe]">
             {vawo?.length === 1
               ? `${vawo?.length} person loves this post`
               : vawo?.length === 0
@@ -384,7 +390,7 @@ const Post: NextPage = (props: any) => {
               onClick={() => {
                 submitVawolence();
               }}
-              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-white text-black"
+              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-[#7f5af0] text-[#fffffe]"
             >
               {!agree ? `love` : `unlove`}
             </motion.i>
@@ -398,7 +404,7 @@ const Post: NextPage = (props: any) => {
               onClick={() => {
                 submitSaved("test", "test");
               }}
-              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-white text-black"
+              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-[#7f5af0] text-[#fffffe]"
             >
               {!ispostSaved ? `save` : `unsave`}
             </motion.i>
@@ -410,7 +416,7 @@ const Post: NextPage = (props: any) => {
                 scale: 1.3,
               }}
               onClick={() => changeComment()}
-              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-white text-black"
+              className="  p-[3px] m-2 cursor-pointer h-[30px] rounded-[14px] mt-4 w-[100px] text-center bg-[#7f5af0] text-[#fffffe]"
             >
               comments..
             </motion.i>
@@ -425,7 +431,7 @@ const Post: NextPage = (props: any) => {
                 onClick={() => {
                   submitdelete();
                 }}
-                className="m-2 text-white bg-black px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
+                className="m-2 text-[#fffffe] bg-[#7f5af0] px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
               >
                 delete
               </motion.i>
@@ -440,7 +446,7 @@ const Post: NextPage = (props: any) => {
                 onClick={() => {
                   submitdelete();
                 }}
-                className="m-2 text-white bg-black px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
+                className="m-2 text-[#fffffe] bg-[#7f5af0] px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
               >
                 delete{" "}
               </motion.i>
@@ -448,7 +454,7 @@ const Post: NextPage = (props: any) => {
           </div>
           <div className="flex ">
             <textarea
-              className="m-2 text-white resize-none bg-black px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
+              className="m-2 text-[#94a1b2] resize-none bg-[#fffffe] px-4 font-semibold outline-none border-none p-2 border-[2px] rounded-2xl "
               placeholder="comment osiso"
               value={com}
               onChange={(e) => {
@@ -457,7 +463,7 @@ const Post: NextPage = (props: any) => {
             />
             <button
               onClick={submitcom}
-              className="bg-[#ffc600] mr-4 text-white p-2 h-[40px] bold w-[100px]  mt-2 rounded-full"
+              className="bg-[#7f5af0] mr-4 text-white p-2 h-[40px] bold w-[100px]  mt-2 rounded-full"
             >
               {All.loading ? "loading" : "submit"}
             </button>
@@ -474,11 +480,11 @@ const Post: NextPage = (props: any) => {
 
                   <div>
                     <Link href={`user/${comment.userid}`}>
-                      <p className="font-bold mt-1 ml-4 cursor-pointer">
+                      <p className="font-bold mt-1 ml-4 text-[#fffffe] cursor-pointer">
                         {comment.username}
                       </p>
                     </Link>
-                    <span className="font-semibold italic ml-4">
+                    <span className="font-semibold italic ml-4 text-[#94a1b2]">
                       {comment.message}{" "}
                       {id === comment.userid && (
                         <span
