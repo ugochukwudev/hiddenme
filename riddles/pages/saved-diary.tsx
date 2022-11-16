@@ -48,7 +48,7 @@ const Saved: NextPage = (props: any) => {
   console.log(result);
 
   return (
-    <div className="bg-gray-600 ">
+    <div className="bg-[#F0F2F5] ">
       {result?.map((post: any, index: number) => {
         return <Post key={post._id} {...post} />;
       })}

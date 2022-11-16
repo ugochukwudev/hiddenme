@@ -47,7 +47,7 @@ const forgotpassword = () => {
 
         <button
           onClick={() => submitdata()}
-          className="bg-[#7f5af0] text-white font-bold  rounded-full hover:text-[#1D2639] hover:bg-white hover:border-[1px] hover:border-[#1D2639]"
+          className="bg-[#1876f2] text-white font-bold  rounded-full hover:text-[#1876f2] hover:bg-white hover:border-[1px] hover:border-[#1876f2]"
         >
           send temporal password
         </button>

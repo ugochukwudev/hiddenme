@@ -55,7 +55,7 @@ const Login: NextPage = () => {
     });
   };
   return (
-    <div className="flex flex-wrap min-h-screen w-full content-center justify-center bg-black py-10 px-4">
+    <div className="flex flex-wrap min-h-screen w-full content-center justify-center bg-[#F0F2F5] py-10 px-4">
       <div className="flex shadow-md">
         <div
           className="flex flex-wrap content-center justify-center rounded-l-md bg-white"
@@ -109,7 +109,7 @@ const Login: NextPage = () => {
               <div className="mb-3">
                 <button
                   onClick={(e) => submitData(e)}
-                  className="mb-1.5 block w-full text-center text-white bg-[#FFCC16] hover:scale-110 px-2 py-1.5 rounded-md cursor-pointer"
+                  className="mb-1.5 block w-full text-center text-white bg-[#1876f2] hover:scale-105 px-2 py-1.5 rounded-md cursor-pointer"
                 >
                   {All.loading ? "loading" : "login"}
                 </button>

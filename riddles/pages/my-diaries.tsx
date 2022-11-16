@@ -45,7 +45,7 @@ const Diaries: NextPage = (props: any) => {
   );
   console.log(result);
   return (
-    <div className="bg-black ">
+    <div className="bg-[#F0F2F5] ">
       {result.lenght < 1 && (
         <p className="text-green-900 text-center font-black text-[40px]">
           User have no post yet{" "}

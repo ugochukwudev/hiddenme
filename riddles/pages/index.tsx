@@ -105,9 +105,8 @@ const Home: NextPage = (props: any) => {
         />
       </Head>
       {user && (
-        <div className="bg-gray-600">
-          <p className="z-10 w-full h-1 rounded-full bg-purple-900 sticky top-[196px] lg:top-[77px]"></p>
-          <div className="bg-[#16161a] h-fit p-2 z-10 flex-wrap sticky top-[196px] lg:top-[80px]">
+        <div className="bg-[#F0F2F5]">
+          <div className="bg-[#1876f2] h-fit p-2 z-10 flex-wrap sticky top-[196px] lg:top-[80px]">
             <Link href="/notifications">
               <button
                 onClick={() => submitnotification()}
@@ -128,6 +127,7 @@ const Home: NextPage = (props: any) => {
               </button>
             </Link>
           </div>
+
           {posts?.map((post: any, i: number) => {
             if (typeof window !== "undefined") {
               console.log("You are on the browser");

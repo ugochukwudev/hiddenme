@@ -54,7 +54,7 @@ const Notifications: NextPage = (props: any) => {
   };
   return (
     <>
-      <h1 className="text-yellow-500 text-2xl text-center">Notifications...</h1>
+      <h1 className="text-[#1876f2] text-2xl text-center">Notifications...</h1>
       <p
         onClick={() => clearallNotification()}
         className="text-[#1D2639] font-medium cursor-pointer leading-[20px] tracking-[-0.5px] italic text-center"
@@ -78,7 +78,7 @@ const Notifications: NextPage = (props: any) => {
               console.log("result", post[0]?._id);
               return (
                 <div key={i} className="w-full text-center h-fit p-4">
-                  <span className="border-2 border-yellow-500 h-fit w-fit text-white cursor-pointer rounded-full">
+                  <span className="border-b-2 border-[#1876f2] h-fit w-fit text-[#050505] cursor-pointer rounded-full">
                     {notification.message}
                   </span>
                   {post[0]?._id !== undefined && (

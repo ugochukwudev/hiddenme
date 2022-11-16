@@ -91,22 +91,22 @@ const Upload: NextPage = () => {
   };
   const All = useSelector((state: any) => state.user);
   return (
-    <div className="bg-gray-600">
-      <h1 className="text-2xl italic font-bold text-white mt-4 text-center">
+    <div className="bg-[#F0F2F5]">
+      <h1 className="text-2xl  font-bold text-[#050505] mt-4 text-center">
         Add new diary
       </h1>
-      <p className="text-red-600 text-center w-10/12 ml-auto mr-auto">
+      <p className="text-blue-600 text-center w-10/12 ml-auto mr-auto">
         Note: only images can be accepted . videos and audios are not surpotted.
         file above 1mb can't be uploaded. we're managing our database
       </p>
 
       <img
-        className="w-[200px] h-[200px] ml-auto mr-auto rounded-[12px] mt-10"
+        className="w-[200px] h-[200px] ml-auto mr-auto text-black rounded-[12px] mt-10"
         src={Image}
         alt="pick an image for preview"
       />
       <textarea
-        className="w-6/12 block p-4 ml-auto mr-auto resize-none outline-none mt-10 mb-10 border-[.05px] border-[black] rounded-[6px]"
+        className="w-6/12 block p-4 ml-auto mr-auto resize-none outline-none mt-10 mb-1  rounded-[6px]"
         placeholder="title ..."
         onChange={(e) => {
           setUserData(e.target.name, e.target.value);
@@ -115,7 +115,7 @@ const Upload: NextPage = () => {
         name="title"
       ></textarea>
       <textarea
-        className="w-6/12 h-[30vh] p-4 block ml-auto mr-auto resize-none outline-none mt-10 mb-10 border-[.05px] border-[black] rounded-[6px]"
+        className="w-6/12 h-[30vh] p-4 block ml-auto mr-auto resize-none outline-none mt-10 mb-10  rounded-[6px]"
         placeholder="write your story ..."
         value={user.text}
         onChange={(e) => {
@@ -138,7 +138,7 @@ const Upload: NextPage = () => {
 
         <button
           onClick={submitData}
-          className="mb-10 p-[10px] bg-[#7f5af0] text-white rounded-[12px] w-[50%] -[50px] mt-10"
+          className="mb-10 p-[10px] bg-[#1876f2] text-white rounded-[12px] w-[50%] -[50px] mt-10"
         >
           {All.loading ? "loading" : "upload your mind ..."}
         </button>
