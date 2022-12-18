@@ -34,7 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         message:
           "invalid password or email dude . Hope you're not a termux hacker ??",
       });
-    } else {
+    } else if (user.password === password) {
       const userData = await db.collection("users").findOne({ email: email });
       //.toArray(function (err: any, result: any) {
 
