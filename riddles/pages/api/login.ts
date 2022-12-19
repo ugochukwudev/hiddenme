@@ -29,26 +29,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
     // console.log("user:", user.email);
 
     //db.close();
-    if (user && user.password !== password) {
+    if (!user)
       res.status(400).json({
         message:
-          "invalid password or email dude . Hope you're not a termux hacker ??",
+          "this email does not exist on our database . Please create an account",
       });
+    else {
+      if (user?.password === password)
+        res.status(200).json({
+          message: `Welcome back ${user?.name}`,
+        });
+      else
+        res.status(400).json({
+          message: "wrong credentials",
+        });
     }
-    if (user.password === password) {
-      const userData = await db.collection("users").findOne({ email: email });
-      //.toArray(function (err: any, result: any) {
-
-      res.status(200).json({
-        message:
-          "user succesfully logged in to the world of magic and bla bla bla ",
-        user: { user: userData },
-      });
-    } else {
-      res.status(400).json({
-        message: "wrong credentials",
-      });
-    }
+  } else {
+    res.status(400).json({
+      message: "invalid request",
+    });
   }
 };
 export default handler;
