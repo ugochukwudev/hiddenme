@@ -34,7 +34,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         message:
           "invalid password or email dude . Hope you're not a termux hacker ??",
       });
-    } else if (user.password === password) {
+    }
+    if (user.password === password) {
       const userData = await db.collection("users").findOne({ email: email });
       //.toArray(function (err: any, result: any) {
 
@@ -42,6 +43,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         message:
           "user succesfully logged in to the world of magic and bla bla bla ",
         user: { user: userData },
+      });
+    } else {
+      res.status(400).json({
+        message: "wrong credentials",
       });
     }
   }
