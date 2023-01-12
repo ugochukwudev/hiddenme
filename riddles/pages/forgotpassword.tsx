@@ -28,7 +28,7 @@ const forgotpassword = () => {
     window.location.pathname = "/login";
   };
   return (
-    <div className="flex flex-col justify-center  h-[80vh] rounded-lg items-center ">
+    <div className="flex flex-col justify-center min-h-[calc(100vh-300px)] rounded-lg items-center ">
       <div className="bg-white rounded-lg px-4 py-4  flex flex-col gap-4 w-11/12 lg:w-6/12 ">
         <p className="text-[#213152] font-black">
           Note: a temporal password will be sent to the submitted email from our

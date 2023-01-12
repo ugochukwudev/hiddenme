@@ -307,6 +307,7 @@ const Post: NextPage = (props: any) => {
     props.data.name == "Emmanuel " ||
     props.data.name == "test" ||
     props.data.name == "Director Tech" ||
+    props.data.name == "bulaba" ||
     props.data.name == "Director Tech II"
       ? true
       : false;
@@ -316,9 +317,9 @@ const Post: NextPage = (props: any) => {
     <>
       {
         <div className="bg-[white] h-fit drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)] text-white lg:w-6/12 ml-auto mr-auto mt-10 mb-10 border-2 diary border-[rgba(0,0,0,0.05)] w-11/12 rounded-xl">
-          <div className=" lg:w-full mb-10   rounded-t-xl h-fit w-full">
-            <div className="flex   items-center h-[60%] md:w-10/12 justify-between ml-auto mr-auto lg:px-4">
-              <div className="flex gap-6 items-center">
+          <div className=" lg:w-full mb-10   rounded-t-xl h-fit w-fullp-4  md:p-6">
+            <div className="flex border-2 border-b-blue-800  items-center h-[60%] md:w-10/12 justify-between ml-auto mr-auto lg:px-4">
+              <div className="flex gap-4 md:gap-6 items-center ">
                 {!verify && (
                   <img
                     className=" mt-5 ml-2 w-[25px] drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)] lg:w-[50px] h-[25px] lg:h-[50px] rounded-full "
@@ -334,15 +335,17 @@ const Post: NextPage = (props: any) => {
                   />
                 )}
                 <Link href={`/user/${props?.data?._id}`}>
-                  <p className=" mt-5  text-[#050505] hover:underline cursor-pointer font-bold">
+                  <p className=" mt-5  text-blue-600 hover:underline cursor-pointer font-bold">
                     {props?.data?.name}
                   </p>
                 </Link>
+
+                <p className=" mt-5 w-[150px] lg:w-fit text-[10px] text-blue-600">
+                  {readable_date}
+                </p>
               </div>
-              <p className=" mt-5 w-[150px] lg:w-fit  text-[#65676B]">
-                {readable_date}
-              </p>
             </div>
+
             <p className=" mb-4 mt-10 px-6 text-center text-[20px] leading-[25px] text-[#050505] whitespace-pre-wrap break-words isolate font-semibold ">
               {props?.title}
             </p>
@@ -350,7 +353,7 @@ const Post: NextPage = (props: any) => {
 
           {props?.image && (
             <motion.img
-              className="ml-auto mr-auto rounded-[8px]  "
+              className="ml-auto mr-auto rounded-[8px] max-h-[50vh] "
               // whileHover={{
               //   scale: 1,
               // }}

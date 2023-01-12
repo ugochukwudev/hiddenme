@@ -144,7 +144,7 @@ const Home: NextPage = (props: any) => {
     </>
   );
 };
-export async function getServerSideProps() {
+export async function getStaticProps() {
   //const [dataset, setDataSet] = useState({} as any);
   const client = new MongoClient(process.env.URI, {
     useNewUrlParser: true,
@@ -173,6 +173,7 @@ export async function getServerSideProps() {
     props: {
       post: all,
     },
+    revalidate: 120, // In seconds
   };
 }
 export default Home;

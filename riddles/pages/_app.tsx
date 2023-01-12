@@ -5,6 +5,7 @@ import { store } from "../store/store";
 import { Provider } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Footer from "../components/footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -23,6 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Provider store={store}>
         <Nav />
         <Component {...pageProps} />
+        <Footer />
       </Provider>
     </>
   );

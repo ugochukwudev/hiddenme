@@ -38,6 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
       if (user?.password === password)
         res.status(200).json({
           message: `Welcome back ${user?.name}`,
+          user: { user: user },
         });
       else
         res.status(400).json({

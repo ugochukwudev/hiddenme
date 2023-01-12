@@ -54,7 +54,9 @@ const Notifications: NextPage = (props: any) => {
   };
   return (
     <>
-      <h1 className="text-[#1876f2] text-2xl text-center">Notifications...</h1>
+      <h1 className="text-[#1876f2] min-h-[calc(100vh-300px)] text-2xl text-center">
+        Notifications...
+      </h1>
       <p
         onClick={() => clearallNotification()}
         className="text-[#1D2639] font-medium cursor-pointer leading-[20px] tracking-[-0.5px] italic text-center"
