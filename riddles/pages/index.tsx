@@ -103,6 +103,7 @@ const Home: NextPage = (props: any) => {
           name="description"
           content="meet different kind of crazy people"
         />
+        <link rel="icon" href="/wolf.png" />
       </Head>
       {user && (
         <div className="bg-[#F0F2F5]">
