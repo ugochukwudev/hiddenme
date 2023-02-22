@@ -7,7 +7,7 @@ import { useEffect, useState, useLayoutEffect } from "react";
 import Alert from "../components/Alert";
 import { useSelector, useDispatch } from "react-redux";
 const { MongoClient, ServerApiVersion } = require("mongodb");
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 const socket = io("https://hiddenme-socket.onrender.com");
 const Home: NextPage = (props: any) => {
   const dispatch = useDispatch();

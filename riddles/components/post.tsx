@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { load, unload, userData } from "../store/user";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 const socket = io("https://hiddenme-socket.onrender.com");
 const Post: NextPage = (props: any) => {
   const dispatch = useDispatch();
