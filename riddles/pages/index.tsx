@@ -199,7 +199,7 @@ export async function getStaticProps() {
     props: {
       post: all,
     },
-    revalidate: 10, // In seconds
+    revalidate: 5, // In seconds
   };
 }
 export default Home;
