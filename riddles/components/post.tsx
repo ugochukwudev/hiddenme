@@ -10,7 +10,7 @@ import { load, unload, userData } from "../store/user";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import io from "socket.io-client";
-const socket = io("http://localhost:3001/");
+const socket = io("https://hiddenme-socket.onrender.com");
 const Post: NextPage = (props: any) => {
   const dispatch = useDispatch();
   const [com, setCom] = useState("");
