@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { load, unload, userData } from "../store/user";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import io from "socket.io-client";
+const socket = io("http://localhost:3001/");
 const Post: NextPage = (props: any) => {
   const dispatch = useDispatch();
   const [com, setCom] = useState("");
@@ -51,10 +53,10 @@ const Post: NextPage = (props: any) => {
       var data = JSON.parse(newObject);
     }
     setName(data?.user?.user?.name);
-    console.log("name", name);
-    console.log("props", props);
+    //console.log("name", name);
+    //console.log("props", props);
     setId(data?.user?.user?._id);
-    console.log("id", id);
+    //console.log("id", id);
 
     // let button = document?.querySelectorAll(".bg-yellow-500");
     // button?.forEach((e: any) => {
@@ -66,6 +68,36 @@ const Post: NextPage = (props: any) => {
     setComments(props?.comment);
     setVawo(props?.support);
     setSavo(props?.saved);
+  }, []);
+  useEffect(() => {
+    socket.on("oops", () => {
+      //let comment = fetch("/api/socket")
+      const comment = async () => {
+        const response = await fetch("/api/socket", {
+          method: "POST",
+          body: JSON.stringify({
+            id: props._id,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+        {
+          data && dispatch(unload());
+          dispatch(alerttext("someone just commented"));
+          dispatch(setalert());
+          setTimeout(() => {
+            dispatch(setalertOff());
+          }, 3000);
+        }
+        console.log(data);
+        setComments(data?.comment);
+      };
+      comment();
+      changeComment();
+    });
   }, []);
   const submitData = async (
     username: any,
@@ -102,7 +134,8 @@ const Post: NextPage = (props: any) => {
     {
       data.comment && setComments(data.comment);
     }
-
+    socket.emit("test");
+    console.log("emit");
     if (!response.ok) {
       console.log(data || "Something went wrong!");
     }
@@ -298,7 +331,7 @@ const Post: NextPage = (props: any) => {
   };
   const agree = vawo?.find((role: any) => role.userid === id);
   const ispostSaved = savo?.find((role: any) => role.userid === id);
-  console.log(current);
+  //console.log(current);
   useEffect(() => {
     agree ? setSupport(false) : setSupport(true);
     ispostSaved ? setSaved(false) : setSaved(true);
@@ -311,7 +344,7 @@ const Post: NextPage = (props: any) => {
     props.data.name == "Director Tech II"
       ? true
       : false;
-  console.log(verify, props.data.name);
+  //console.log(verify, props.data.name);
 
   return (
     <>
@@ -322,6 +355,7 @@ const Post: NextPage = (props: any) => {
               <div className="flex gap-4 md:gap-6 items-center ">
                 {!verify && (
                   <img
+                    //onClick={() => lovedtest()}
                     className=" mt-5 ml-2 w-[25px] drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)] lg:w-[50px] h-[25px] lg:h-[50px] rounded-full "
                     alt=""
                     src="/wolf.png"
@@ -376,7 +410,7 @@ const Post: NextPage = (props: any) => {
           )}
           <p className="w-11/12 ml-auto text-[#050505] mr-auto whitespace-pre-wrap break-words isolate font-normal">
             {props?.text}
-            <span className="cursor-pointer">{"  "}ReadMore...</span>
+            {/* <span className="cursor-pointer">{"  "}ReadMore...</span> */}
           </p>
           <p className="ml-2 leading-[1.3333] text-[.9375rem]  italic font-semibold text-[#65676B]">
             {vawo?.length === 1

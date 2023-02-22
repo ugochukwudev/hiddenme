@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 import { useEffect, useState, useLayoutEffect } from "react";
 import Alert from "../components/Alert";
 import { useSelector, useDispatch } from "react-redux";
-
 const { MongoClient, ServerApiVersion } = require("mongodb");
-
+import io from "socket.io-client";
+const socket = io("http://localhost:3001/");
 const Home: NextPage = (props: any) => {
   const dispatch = useDispatch();
   const show = useSelector(
@@ -17,7 +17,7 @@ const Home: NextPage = (props: any) => {
   );
   const { post } = props;
   const all = JSON.parse(post);
-  console.log(all);
+  // console.log(all);
   // const datas = post.user.user;
   const posts = all?.user;
   const [data, setData] = useState("");
@@ -44,7 +44,30 @@ const Home: NextPage = (props: any) => {
       console.log(data || "Something went wrong!");
     }
   };
-  console.log(post?.user?.user);
+
+  // const onChangeHandler = () => {
+  //   socket.emit("input-change", "oops");
+  // };
+  //console.log(post?.user?.user);
+  useEffect(() => {
+    socket.on("oops", () => {
+      if (typeof window !== "undefined") {
+        console.log("You are on the browser");
+        var newObject: any = window.localStorage.getItem("user");
+        var data = JSON?.parse(newObject);
+      }
+      {
+        !data && window?.location?.replace("/login");
+      }
+      {
+        setData(data?.user?.user?.name);
+
+        newObject && setId(data?.user?.user?._id);
+        relogin(data?.user?.user?.email, data?.user?.user?.password);
+      }
+      setNotification(data?.user?.user?.notify);
+    });
+  }, []);
   useEffect(() => {
     if (typeof window !== "undefined") {
       console.log("You are on the browser");
@@ -87,15 +110,16 @@ const Home: NextPage = (props: any) => {
     }
     setNotification(data?.user?.user?.notify);
   }, []);
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (typeof window !== "undefined") {
-      console.log("You are on the browser");
+      // console.log("You are on the browser");
       var newObject: any = window.localStorage.getItem("user");
       var data = JSON.parse(newObject);
       setUser(data);
       console.log("wee", user);
     }
   }, []);
+
   return (
     <>
       <Head>
@@ -116,6 +140,7 @@ const Home: NextPage = (props: any) => {
                 {`notification(${notification})`}
               </button>
             </Link>
+
             <Link href="/login">
               <button
                 onClick={() => {
@@ -131,10 +156,10 @@ const Home: NextPage = (props: any) => {
 
           {posts?.map((post: any, i: number) => {
             if (typeof window !== "undefined") {
-              console.log("You are on the browser");
+              // console.log("You are on the browser");
               var newObject: any = window.localStorage.getItem("user");
               var data = JSON.parse(newObject);
-              console.log("data", data);
+              //console.log("data", data);
             }
 
             return <Post key={post._id} {...post} {...data} />;
@@ -159,7 +184,7 @@ export async function getStaticProps() {
     const user = await db
       .collection("posts")
       .find()
-      .sort({ title: 1 })
+      .sort({ createdAt: -1 })
       .toArray();
     return {
       message: "sucess 🦄 🦄",

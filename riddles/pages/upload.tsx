@@ -7,6 +7,8 @@ import { load, unload } from "../store/user";
 import { setalert, setalertOff, alerttext } from "../store/alert";
 import Alert from "../components/Alert";
 import { useRouter } from "next/router";
+import { v2 as cloudinary } from "cloudinary";
+
 const Upload: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -22,22 +24,24 @@ const Upload: NextPage = () => {
     text: "",
     image: "",
   });
+  const [file, setFile] = useState<any>();
 
   const setUserData = (data: any, dataContent: any) => {
     setUser((user) => {
       return { ...user, [data]: dataContent };
     });
   };
+
   const handleChange = (e: any) => {
+    setFile(e.target.files[0]);
+    console.log(file);
+
     const img = e.target.name;
     const data = e.target.files[0];
     console.log();
     setCreate(data);
     let reader = new FileReader();
     reader.addEventListener("load", () => {
-      setUser((user) => {
-        return { ...user, [img]: reader.result };
-      });
       setImage(reader.result);
       console.log(reader.result);
     });
@@ -61,32 +65,71 @@ const Upload: NextPage = () => {
       setData(data?.user?.user);
     }
   }, []);
-  const submitData = async () => {
-    dispatch(load());
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: JSON.stringify({ user: user, data: datas }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const uploadImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "hiddenme");
 
-    const data = await response.json();
-    {
-      data && dispatch(unload());
-      dispatch(alerttext(data?.message));
-      dispatch(setalert());
-      setTimeout(() => {
-        dispatch(setalertOff());
-      }, 3000);
-    }
-    console.log(data);
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/dvkwqdb22/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
-      console.log(data || "Something went wrong!");
+      throw new Error("Failed to upload image to Cloudinary");
     }
-    if (response.ok) {
-      window.location.replace("/");
+
+    const data = await response.json();
+    const image = "image";
+    setUser((user) => {
+      return { ...user, [image]: data.secure_url };
+    });
+    return data.secure_url;
+  };
+  const submitData = async () => {
+    dispatch(load());
+
+    const set = await uploadImage(file);
+    const image = "image";
+    setUser((user) => {
+      return { ...user, [image]: set };
+    });
+    if (set) {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: JSON.stringify({
+          user: {
+            title: user.title,
+            text: user.text,
+            image: set,
+          },
+          data: datas,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      {
+        data && dispatch(unload());
+        dispatch(alerttext(data?.message));
+        dispatch(setalert());
+        setTimeout(() => {
+          dispatch(setalertOff());
+        }, 3000);
+      }
+      console.log(data);
+
+      if (!response.ok) {
+        console.log(data || "Something went wrong!");
+      }
+      if (response.ok) {
+        window.location.replace("/");
+      }
     }
   };
   const All = useSelector((state: any) => state.user);
