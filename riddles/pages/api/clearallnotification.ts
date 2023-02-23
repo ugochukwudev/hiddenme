@@ -27,7 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
     const user = await db.collection("users").findOneAndUpdate(
       { _id: ObjectId(id) },
       {
-        $unset: {
+        $set: {
           notification: [],
         },
       },
