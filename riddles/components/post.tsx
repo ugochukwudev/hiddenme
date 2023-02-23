@@ -349,7 +349,7 @@ const Post: NextPage = (props: any) => {
   return (
     <>
       {
-        <div className="bg-[white] h-fit drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)] text-white lg:w-6/12 ml-auto mr-auto mt-10 mb-10 border-2 diary border-[rgba(0,0,0,0.05)] w-11/12 rounded-xl">
+        <div className="bg-[white] h-fit drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)] max-h-[150vh] scrollbar-hide overflow-y-scroll  text-white lg:w-6/12 ml-auto mr-auto mt-10 mb-10 border-2 diary border-[rgba(0,0,0,0.05)] w-11/12 rounded-xl">
           <div className=" lg:w-full mb-10   rounded-t-xl h-fit w-fullp-4  md:p-6">
             <div className="flex border-2 border-b-blue-800  items-center h-[60%] md:w-10/12 justify-between ml-auto mr-auto lg:px-4">
               <div className="flex gap-4 md:gap-6 items-center ">
