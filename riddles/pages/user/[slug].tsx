@@ -109,7 +109,7 @@ const User = (props: any) => {
           </p>
         )}
 
-        {data?.user?._id === slug && (
+        {data?.user?.user?._id === slug && (
           <Link href="/changepassword">
             <p className="text-blue-600 text-xl px-2 py-1 border-2  border-blue-600 w-fit text-center ml-auto mr-auto hover:font-bold mt-10 rounded-full hover:bg-blue-600 hover:text-[white] cursor-pointer">
               change password
