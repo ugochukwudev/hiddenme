@@ -45,7 +45,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, err: any) => {
         { email: email },
         {
           $set: {
-            password: key,
+            password: `"${key}"`,
           },
         },
         { upsert: true }
