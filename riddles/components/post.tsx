@@ -315,7 +315,7 @@ const Post: NextPage = (props: any) => {
     }
   };
   const All = useSelector((state: any) => state.user);
-  let time = props?.data?.createdAt;
+  let time = props?.createdAt;
   var date = new Date(time);
   var readable_date = date.toString().slice(0, 25);
   //console.log("timej", date.toString().slice(0, 25));
